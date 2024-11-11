@@ -10,11 +10,12 @@ class AuthRepository @Inject constructor(
 ) : IAuthRepository {
 
     override suspend fun login(email: String, password: String) {
-        auth.createUserWithEmailAndPassword(email, password).await()
+        auth.signInWithEmailAndPassword(email, password).await()
+
     }
 
     override suspend fun register(email: String, password: String) {
-        auth.signInWithEmailAndPassword(email, password).await()
+        auth.createUserWithEmailAndPassword(email, password).await()
     }
 
     override suspend fun forgot(email: String) {

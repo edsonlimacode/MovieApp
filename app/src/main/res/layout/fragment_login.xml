@@ -82,7 +82,7 @@
             android:drawablePadding="10dp"
             android:fontFamily="@font/urbanist_600"
             android:hint="@string/text_hint_edit_password_login_fragment"
-            android:inputType="textEmailAddress"
+            android:inputType="textPassword"
             android:paddingHorizontal="16dp"
             android:paddingVertical="16dp"
             android:textColor="#212121"

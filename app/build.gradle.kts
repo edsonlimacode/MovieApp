@@ -63,9 +63,14 @@ dependencies {
     //spashscreen
     implementation("androidx.core:core-splashscreen:1.0.1")
 
+    //https://github.com/bumptech/glide
+    implementation("com.github.bumptech.glide:glide:4.16.0")
+
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
+    implementation(libs.androidx.navigation.fragment.ktx)
+    implementation(libs.androidx.navigation.ui.ktx)
     implementation(libs.androidx.activity)
     implementation(libs.androidx.constraintlayout)
     testImplementation(libs.junit)
