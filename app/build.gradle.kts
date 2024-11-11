@@ -2,6 +2,11 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
     id("com.google.gms.google-services")
+    id("com.google.devtools.ksp")
+    id("com.google.dagger.hilt.android")
+    id("androidx.navigation.safeargs.kotlin")
+    id("kotlin-parcelize")
+    id("kotlin-kapt")
 }
 
 android {
@@ -11,7 +16,7 @@ android {
     defaultConfig {
         applicationId = "com.edsonlima.flixapp"
         minSdk = 24
-        targetSdk = 34
+        targetSdk = 35
         versionCode = 1
         versionName = "1.0"
 
@@ -46,6 +51,14 @@ dependencies {
     implementation("com.google.firebase:firebase-auth-ktx")
     implementation("com.google.firebase:firebase-storage-ktx")
     implementation("com.google.firebase:firebase-firestore-ktx")
+
+    //daggerhil
+    implementation("com.google.dagger:hilt-android:2.48.1")
+    kapt("com.google.dagger:hilt-android-compiler:2.48.1")
+
+    // ViewModel e LiveData
+    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.8.5")
+    implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.8.5")
 
     //spashscreen
     implementation("androidx.core:core-splashscreen:1.0.1")

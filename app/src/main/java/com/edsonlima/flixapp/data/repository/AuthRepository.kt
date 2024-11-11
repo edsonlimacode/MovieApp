@@ -3,8 +3,9 @@ package com.edsonlima.flixapp.data.repository
 import com.edsonlima.flixapp.domain.repository.IAuthRepository
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.tasks.await
+import javax.inject.Inject
 
-class AuthRepository constructor(
+class AuthRepository @Inject constructor(
     private val auth: FirebaseAuth
 ) : IAuthRepository {
 

@@ -1,8 +1,9 @@
 package com.edsonlima.flixapp.domain.usecase
 
 import com.edsonlima.flixapp.data.repository.AuthRepository
+import javax.inject.Inject
 
-class RegisterUseCase constructor(
+class RegisterUseCase @Inject constructor(
     private val authRepository: AuthRepository
 ) {
 

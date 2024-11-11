@@ -7,8 +7,9 @@ import android.view.View
 import android.view.ViewGroup
 import com.edsonlima.flixapp.R
 import com.edsonlima.flixapp.databinding.FragmentOnBoardingBinding
+import dagger.hilt.android.AndroidEntryPoint
 
-
+@AndroidEntryPoint
 class OnBoardingFragment : Fragment() {
 
     private lateinit var binding: FragmentOnBoardingBinding
