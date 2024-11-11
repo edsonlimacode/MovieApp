@@ -14,6 +14,8 @@ import com.edsonlima.flixapp.R
 import com.edsonlima.flixapp.databinding.FragmentRegisterBinding
 import com.edsonlima.flixapp.presenter.auth.login.LoginViewModel
 import com.edsonlima.flixapp.utils.StateView
+import com.edsonlima.flixapp.utils.hideKeyboard
+import com.edsonlima.flixapp.utils.initToolBar
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -40,6 +42,8 @@ class RegisterFragment : Fragment() {
             R.drawable.loading
         ).into(binding.loading);
 
+        initToolBar(binding.tbRegister)
+
         initListeners()
     }
 
@@ -60,6 +64,7 @@ class RegisterFragment : Fragment() {
             if (Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
                 if (password.isNotEmpty()) {
                     if (password.length > 3) {
+                        hideKeyboard()
                         register(email, password)
                     } else {
                         Toast.makeText(

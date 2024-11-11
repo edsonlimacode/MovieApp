@@ -9,10 +9,13 @@ import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.edsonlima.flixapp.R
 import com.edsonlima.flixapp.databinding.FragmentLoginBinding
 import com.edsonlima.flixapp.utils.StateView
+import com.edsonlima.flixapp.utils.hideKeyboard
+import com.edsonlima.flixapp.utils.initToolBar
 import dagger.hilt.android.AndroidEntryPoint
 import dagger.hilt.android.HiltAndroidApp
 import kotlin.math.log
@@ -41,6 +44,8 @@ class LoginFragment : Fragment() {
             R.drawable.loading
         ).into(binding.loading);
 
+        initToolBar(binding.tbLogin)
+
         initListeners()
     }
 
@@ -50,7 +55,12 @@ class LoginFragment : Fragment() {
             validate()
         }
 
+        binding.btnForgotPassword.setOnClickListener {
+            findNavController().navigate(R.id.action_loginFragment_to_forgotFragment)
+        }
+
     }
+
 
     private fun validate() {
 
@@ -61,6 +71,7 @@ class LoginFragment : Fragment() {
             if (Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
                 if (password.isNotEmpty()) {
                     if (password.length > 3) {
+                        hideKeyboard()
                         login(email, password)
                     } else {
                         Toast.makeText(

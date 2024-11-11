@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.fragment.findNavController
 import com.edsonlima.flixapp.R
 import com.edsonlima.flixapp.databinding.FragmentOnBoardingBinding
 import dagger.hilt.android.AndroidEntryPoint
@@ -24,5 +25,15 @@ class OnBoardingFragment : Fragment() {
         return binding.root
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
+        initListeners()
+    }
+
+    private fun initListeners() {
+        binding.btnOnBoard.setOnClickListener {
+            findNavController().navigate(R.id.action_onBoardingFragment_to_authentication)
+        }
+    }
 }
