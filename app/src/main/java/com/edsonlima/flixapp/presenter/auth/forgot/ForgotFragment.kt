@@ -12,6 +12,7 @@ import androidx.fragment.app.viewModels
 import com.bumptech.glide.Glide
 import com.edsonlima.flixapp.R
 import com.edsonlima.flixapp.databinding.FragmentForgotBinding
+import com.edsonlima.flixapp.utils.FirebaseHelper
 import com.edsonlima.flixapp.utils.StateView
 import com.edsonlima.flixapp.utils.hideKeyboard
 import com.edsonlima.flixapp.utils.initToolBar
@@ -65,10 +66,14 @@ class ForgotFragment : Fragment() {
                 recover(email)
 
             } else {
-                Toast.makeText(requireContext(), "E-mail inválido", Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    requireContext(),
+                    getString(R.string.invalid_email), Toast.LENGTH_SHORT
+                ).show()
             }
         } else {
-            Toast.makeText(requireContext(), "E-mail é obrigatório", Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(), getString(R.string.empty_email), Toast.LENGTH_SHORT)
+                .show()
         }
     }
 
@@ -85,7 +90,7 @@ class ForgotFragment : Fragment() {
                     binding.loadingForgot.isVisible = false
                     Toast.makeText(
                         requireContext(),
-                        "Acesse seu e-mail de cadastro para alterar a senha",
+                        getString(R.string.text_access_email_to_recover_password),
                         Toast.LENGTH_SHORT
                     )
                         .show()
@@ -93,7 +98,11 @@ class ForgotFragment : Fragment() {
 
                 is StateView.Error -> {
                     binding.loadingForgot.isVisible = false
-                    Toast.makeText(requireContext(), stateView.message, Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        requireContext(),
+                        FirebaseHelper.validError(stateView.message ?: ""),
+                        Toast.LENGTH_LONG
+                    ).show()
                 }
             }
         }

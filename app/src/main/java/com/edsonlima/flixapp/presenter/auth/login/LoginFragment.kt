@@ -1,5 +1,6 @@
 package com.edsonlima.flixapp.presenter.auth.login
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Patterns
 import android.view.LayoutInflater
@@ -13,12 +14,12 @@ import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.edsonlima.flixapp.R
 import com.edsonlima.flixapp.databinding.FragmentLoginBinding
+import com.edsonlima.flixapp.presenter.MainActivity
+import com.edsonlima.flixapp.utils.FirebaseHelper
 import com.edsonlima.flixapp.utils.StateView
 import com.edsonlima.flixapp.utils.hideKeyboard
 import com.edsonlima.flixapp.utils.initToolBar
 import dagger.hilt.android.AndroidEntryPoint
-import dagger.hilt.android.HiltAndroidApp
-import kotlin.math.log
 
 @AndroidEntryPoint
 class LoginFragment : Fragment() {
@@ -61,7 +62,6 @@ class LoginFragment : Fragment() {
 
     }
 
-
     private fun validate() {
 
         val email = binding.editEmailLogin.text.toString().trim()
@@ -76,19 +76,27 @@ class LoginFragment : Fragment() {
                     } else {
                         Toast.makeText(
                             requireContext(),
-                            "Senha deve conter no minímo 6 caracteres",
+                            getString(R.string.password_weak),
                             Toast.LENGTH_SHORT
                         ).show()
                     }
                 } else {
-                    Toast.makeText(requireContext(), "Senha é obrigatória", Toast.LENGTH_SHORT)
+                    Toast.makeText(
+                        requireContext(),
+                        getString(R.string.empty_password), Toast.LENGTH_LONG
+                    )
                         .show()
                 }
             } else {
-                Toast.makeText(requireContext(), "E-mail inválido", Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    requireContext(),
+                    getString(R.string.invalid_email),
+                    Toast.LENGTH_SHORT
+                ).show()
             }
         } else {
-            Toast.makeText(requireContext(), "E-mail é obrigatório", Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(), getString(R.string.empty_email), Toast.LENGTH_LONG)
+                .show()
         }
     }
 
@@ -103,12 +111,19 @@ class LoginFragment : Fragment() {
 
                 is StateView.Success -> {
                     binding.loading.isVisible = false
-                    Toast.makeText(requireContext(), "Logado com sucesso", Toast.LENGTH_SHORT).show()
+
+                    startActivity(Intent(requireContext(), MainActivity::class.java))
+                    requireActivity().finish()
+
                 }
 
                 is StateView.Error -> {
                     binding.loading.isVisible = false
-                    Toast.makeText(requireContext(), stateView.message, Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        requireContext(),
+                        FirebaseHelper.validError(stateView.message ?: ""),
+                        Toast.LENGTH_LONG
+                    ).show()
                 }
             }
         }
