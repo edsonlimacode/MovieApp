@@ -13,8 +13,7 @@ import androidx.fragment.app.viewModels
 import com.bumptech.glide.Glide
 import com.edsonlima.flixapp.R
 import com.edsonlima.flixapp.databinding.FragmentRegisterBinding
-import com.edsonlima.flixapp.presenter.MainActivity
-import com.edsonlima.flixapp.presenter.auth.login.LoginViewModel
+import com.edsonlima.flixapp.presenter.main.MainActivity
 import com.edsonlima.flixapp.utils.FirebaseHelper
 import com.edsonlima.flixapp.utils.StateView
 import com.edsonlima.flixapp.utils.hideKeyboard
