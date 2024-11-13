@@ -6,10 +6,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
-import com.bumptech.glide.Glide
-import com.edsonlima.flixapp.data.model.Movie
 import com.edsonlima.flixapp.databinding.ItemGenreMovieBinding
-import com.edsonlima.flixapp.databinding.ItemMovieBinding
 import com.edsonlima.flixapp.presenter.model.GenrePresentation
 
 class GenreMovieAdapter(

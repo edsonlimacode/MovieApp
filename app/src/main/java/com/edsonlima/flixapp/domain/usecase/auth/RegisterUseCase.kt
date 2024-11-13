@@ -1,4 +1,4 @@
-package com.edsonlima.flixapp.domain.usecase
+package com.edsonlima.flixapp.domain.usecase.auth
 
 import com.edsonlima.flixapp.data.repository.AuthRepository
 import javax.inject.Inject

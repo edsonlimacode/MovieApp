@@ -2,9 +2,7 @@ package com.edsonlima.flixapp.presenter.auth.forgot
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.liveData
-import com.edsonlima.flixapp.domain.usecase.ForgotUseCase
-import com.edsonlima.flixapp.domain.usecase.LoginUseCase
-import com.edsonlima.flixapp.domain.usecase.RegisterUseCase
+import com.edsonlima.flixapp.domain.usecase.auth.ForgotUseCase
 import com.edsonlima.flixapp.utils.StateView
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers

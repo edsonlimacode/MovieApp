@@ -1,6 +1,6 @@
 package com.edsonlima.flixapp.presenter.model
 
-import com.edsonlima.flixapp.data.model.Movie
+import com.edsonlima.flixapp.domain.model.Movie
 
 data class GenrePresentation(
     val id: String?,

@@ -7,8 +7,8 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.bumptech.glide.Glide
-import com.edsonlima.flixapp.data.model.Movie
 import com.edsonlima.flixapp.databinding.ItemMovieBinding
+import com.edsonlima.flixapp.domain.model.Movie
 
 class MovieAdapter(
     private val context: Context
