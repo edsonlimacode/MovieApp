@@ -4,6 +4,7 @@ import com.edsonlima.flixapp.data.model.GenreResponse
 import com.edsonlima.flixapp.data.model.MovieResponse
 import com.edsonlima.flixapp.domain.model.Genre
 import com.edsonlima.flixapp.domain.model.Movie
+import com.edsonlima.flixapp.presenter.model.GenrePresentation
 
 fun GenreResponse.toDomain(): Genre {
     return Genre(
@@ -28,5 +29,13 @@ fun MovieResponse.toDomain(): Movie {
         video = this.video,
         voteAverage = this.voteAverage,
         voteCount = this.voteCount
+    )
+}
+
+fun Genre.toPresentation(): GenrePresentation {
+    return GenrePresentation(
+        id = this.id,
+        name = this.name,
+        movies = emptyList()
     )
 }

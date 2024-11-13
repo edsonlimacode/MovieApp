@@ -114,7 +114,6 @@ class LoginFragment : Fragment() {
 
                     startActivity(Intent(requireContext(), MainActivity::class.java))
                     requireActivity().finish()
-
                 }
 
                 is StateView.Error -> {

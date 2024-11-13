@@ -19,12 +19,10 @@ class DataModule {
 
     @Provides
     @Singleton
-    fun providersServiceProvider(
+    fun providersServiceApiProvider(
         serviceProvider: ServiceProvider
     ): ServiceApi {
-
         return serviceProvider.serviceCreate(ServiceApi::class.java)
-
     }
 
 }
