@@ -9,7 +9,9 @@ import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.edsonlima.flixapp.databinding.ItemGenreMovieBinding
 import com.edsonlima.flixapp.presenter.model.GenrePresentation
 
-class GenreMovieAdapter() : ListAdapter<GenrePresentation, GenreMovieAdapter.MovieViewHolder>(diffCallback) {
+class GenreMovieAdapter(
+    private val onClick: (Int, String) -> Unit
+) : ListAdapter<GenrePresentation, GenreMovieAdapter.MovieViewHolder>(diffCallback) {
 
     companion object {
         val diffCallback = object : DiffUtil.ItemCallback<GenrePresentation>() {
@@ -41,6 +43,10 @@ class GenreMovieAdapter() : ListAdapter<GenrePresentation, GenreMovieAdapter.Mov
 
             binding.rvGenre.adapter = movieAdapter
             movieAdapter.submitList(genre.movies)
+
+            binding.btnSeeAll.setOnClickListener {
+                onClick(genre.id!!, genre.name!!)
+            }
         }
     }
 

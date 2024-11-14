@@ -1,18 +1,21 @@
 package com.edsonlima.flixapp.presenter.main.home
 
 import android.os.Bundle
-import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import com.edsonlima.flixapp.R
-import com.edsonlima.flixapp.databinding.FragmentHomeAuthBinding
+import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import com.edsonlima.flixapp.databinding.FragmentHomeBinding
 import com.edsonlima.flixapp.presenter.main.home.adapter.GenreMovieAdapter
+import com.edsonlima.flixapp.presenter.model.GenrePresentation
 import com.edsonlima.flixapp.utils.StateView
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class HomeFragment : Fragment() {
@@ -46,7 +49,11 @@ class HomeFragment : Fragment() {
             when (stateView) {
                 is StateView.Loading -> {}
                 is StateView.Success -> {
-                    genreMovieAdapter.submitList(stateView.data)
+
+                    stateView.data?.let {
+                        genreMovieAdapter.submitList(it)
+                        getMoviesByGenre(it)
+                    }
                 }
 
                 is StateView.Error -> {}
@@ -54,9 +61,38 @@ class HomeFragment : Fragment() {
         }
     }
 
+    private fun getMoviesByGenre(genres: List<GenrePresentation>) {
+
+        val genreMultabaleList = genres.toMutableList()
+
+        genreMultabaleList.forEachIndexed { index, genre ->
+            homeViewModel.getMoviesByGenreId(genre.id!!).observe(viewLifecycleOwner) { stateView ->
+                when (stateView) {
+                    is StateView.Loading -> {}
+                    is StateView.Success -> {
+                        genreMultabaleList[index] = genre.copy(movies = stateView.data?.take(10))
+
+                        lifecycleScope.launch {
+                            delay(1000)
+                            genreMovieAdapter.submitList(genreMultabaleList)
+                        }
+                    }
+
+                    is StateView.Error -> {
+                        Toast.makeText(requireContext(), stateView.message, Toast.LENGTH_SHORT)
+                            .show()
+                    }
+                }
+            }
+        }
+    }
+
     private fun initRecyclerView() {
 
-        genreMovieAdapter = GenreMovieAdapter()
+        genreMovieAdapter = GenreMovieAdapter { genreId, name ->
+            val action = HomeFragmentDirections.actionMenuHomeToMovieGenreFragment(genreId, name)
+            findNavController().navigate(action)
+        }
 
         binding.rvHome.adapter = genreMovieAdapter
 

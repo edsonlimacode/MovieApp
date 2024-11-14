@@ -14,7 +14,7 @@ interface ServiceApi {
         @Query("language") language: String
     ): GenresResponse
 
-    @GET("genre/discover/movie")
+    @GET("discover/movie")
     suspend fun getMoviesByGenreId(
         @Query("api_key") apiKey: String,
         @Query("language") language: String,
