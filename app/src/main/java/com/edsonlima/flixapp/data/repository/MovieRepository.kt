@@ -20,4 +20,20 @@ class MovieRepository @Inject constructor(
     ): List<MovieResponse> {
         return service.getMoviesByGenreId(apiKey, language, genreId).results ?: emptyList()
     }
+
+    override suspend fun searchMoviesByName(
+        apiKey: String,
+        language: String,
+        query: String?
+    ): List<MovieResponse> {
+        return service.searchMoviesByName(apiKey, language, query).results ?: emptyList()
+    }
+
+    override suspend fun getMovieById(
+        apiKey: String,
+        language: String,
+        movieId: Int
+    ): MovieResponse {
+        return service.getMovieById(movieId, apiKey, language)
+    }
 }

@@ -4,6 +4,7 @@ import com.edsonlima.flixapp.data.model.BasePaginationResponse
 import com.edsonlima.flixapp.data.model.GenresResponse
 import com.edsonlima.flixapp.data.model.MovieResponse
 import retrofit2.http.GET
+import retrofit2.http.Path
 import retrofit2.http.Query
 
 interface ServiceApi {
@@ -20,5 +21,19 @@ interface ServiceApi {
         @Query("language") language: String,
         @Query("with_genres") genreId: Int,
     ): BasePaginationResponse<List<MovieResponse>>
+
+    @GET("search/movie")
+    suspend fun searchMoviesByName(
+        @Query("api_key") apiKey: String,
+        @Query("language") language: String,
+        @Query("query") query: String?,
+    ): BasePaginationResponse<List<MovieResponse>>
+
+    @GET("movie/{movei_id}")
+    suspend fun getMovieById(
+        @Path("movei_id") movieId: Int,
+        @Query("api_key") apiKey: String,
+        @Query("language") language: String,
+    ): MovieResponse
 
 }

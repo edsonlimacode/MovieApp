@@ -10,7 +10,8 @@ import com.edsonlima.flixapp.databinding.ItemGenreMovieBinding
 import com.edsonlima.flixapp.presenter.model.GenrePresentation
 
 class GenreMovieAdapter(
-    private val onClick: (Int, String) -> Unit
+    private val onClick: (Int, String) -> Unit,
+    private val onClickListener: (Int) -> Unit
 ) : ListAdapter<GenrePresentation, GenreMovieAdapter.MovieViewHolder>(diffCallback) {
 
     companion object {
@@ -39,7 +40,10 @@ class GenreMovieAdapter(
 
             binding.textCategoryTitle.text = genre.name.toString()
 
-            val movieAdapter = MovieAdapter(binding.root.context)
+            val movieAdapter = MovieAdapter(
+                context = binding.root.context,
+                onClickListener = onClickListener
+            )
 
             binding.rvGenre.adapter = movieAdapter
             movieAdapter.submitList(genre.movies)

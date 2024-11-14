@@ -1,4 +1,4 @@
-package com.edsonlima.flixapp.presenter.movie
+package com.edsonlima.flixapp.presenter.movie.movelist
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -7,12 +7,12 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.bumptech.glide.Glide
-import com.edsonlima.flixapp.databinding.ItemMovieBinding
 import com.edsonlima.flixapp.databinding.ItemMovieGenreBinding
 import com.edsonlima.flixapp.domain.model.Movie
 
 class MovieGenreAdapter(
-    private val context: Context
+    private val context: Context,
+    private val onClickListener: (Int) -> Unit
 ) : ListAdapter<Movie, MovieGenreAdapter.MovieViewHolder>(diffCallback) {
 
     companion object {
@@ -38,7 +38,8 @@ class MovieGenreAdapter(
         val view = ItemMovieGenreBinding.inflate(
             inflate,
             parent,
-            false)
+            false
+        )
 
         return MovieViewHolder(view)
     }
@@ -48,5 +49,11 @@ class MovieGenreAdapter(
         Glide.with(context)
             .load("https://image.tmdb.org/t/p/w500${movie.posterPath}")
             .into(holder.binding.imgItemMovie)
+
+        holder.binding.cvMovieGenre.setOnClickListener {
+            movie.id?.let { movieId ->
+                onClickListener(movieId)
+            }
+        }
     }
 }

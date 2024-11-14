@@ -36,7 +36,7 @@
         tools:layout="@layout/fragment_search" />
     <fragment
         android:id="@+id/movieGenreFragment"
-        android:name="com.edsonlima.flixapp.presenter.movie.MovieGenreFragment"
+        android:name="com.edsonlima.flixapp.presenter.movie.movelist.MovieGenreFragment"
         android:label="fragment_movie_genre"
         tools:layout="@layout/fragment_movie_genre" >
         <argument
@@ -46,4 +46,14 @@
             android:name="name"
             app:argType="string" />
     </fragment>
+    <fragment
+        android:id="@+id/movieDetailsFragment"
+        android:name="com.edsonlima.flixapp.presenter.movie.movedetails.MovieDetailsFragment"
+        android:label="fragment_movie_details"
+        tools:layout="@layout/fragment_movie_details" >
+        <argument
+            android:name="movieId"
+            app:argType="integer" />
+    </fragment>
+    <action android:id="@+id/action_global_movieDetailsFragment" app:destination="@id/movieDetailsFragment" />
 </navigation>

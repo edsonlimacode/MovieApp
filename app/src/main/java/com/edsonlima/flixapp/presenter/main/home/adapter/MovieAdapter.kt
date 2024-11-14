@@ -11,7 +11,8 @@ import com.edsonlima.flixapp.databinding.ItemMovieBinding
 import com.edsonlima.flixapp.domain.model.Movie
 
 class MovieAdapter(
-    private val context: Context
+    private val context: Context,
+    private val onClickListener: (Int) -> Unit
 ) : ListAdapter<Movie, MovieAdapter.MovieViewHolder>(diffCallback) {
 
     companion object {
@@ -45,5 +46,11 @@ class MovieAdapter(
         Glide.with(context)
             .load("https://image.tmdb.org/t/p/w500${movie.posterPath}")
             .into(holder.binding.imgItemMovie)
+
+        holder.binding.cvMovieHome.setOnClickListener {
+            movie.id?.let { movieId ->
+                onClickListener(movieId)
+            }
+        }
     }
 }

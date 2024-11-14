@@ -7,13 +7,25 @@ import retrofit2.http.Query
 interface IMovieRepository {
 
     suspend fun getGenres(
-        @Query("api_key") apiKey: String,
-        @Query("language") language: String
+        apiKey: String,
+        language: String
     ): GenresResponse
 
     suspend fun getMoviesByGenreId(
-        @Query("api_key") apiKey: String,
-        @Query("language") language: String,
-        @Query("with_genres") genreId: Int,
+        apiKey: String,
+        language: String,
+        genreId: Int,
     ): List<MovieResponse>
+
+    suspend fun searchMoviesByName(
+        apiKey: String,
+        language: String,
+        query: String?
+    ): List<MovieResponse>
+
+    suspend fun getMovieById(
+        apiKey: String,
+        language: String,
+        movieId: Int
+    ): MovieResponse
 }

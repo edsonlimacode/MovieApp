@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import com.edsonlima.flixapp.MainGraphDirections
 import com.edsonlima.flixapp.databinding.FragmentHomeBinding
 import com.edsonlima.flixapp.presenter.main.home.adapter.GenreMovieAdapter
 import com.edsonlima.flixapp.presenter.model.GenrePresentation
@@ -89,10 +90,17 @@ class HomeFragment : Fragment() {
 
     private fun initRecyclerView() {
 
-        genreMovieAdapter = GenreMovieAdapter { genreId, name ->
-            val action = HomeFragmentDirections.actionMenuHomeToMovieGenreFragment(genreId, name)
-            findNavController().navigate(action)
-        }
+        genreMovieAdapter = GenreMovieAdapter(
+            onClick = { genreId, name ->
+                val action =
+                    HomeFragmentDirections.actionMenuHomeToMovieGenreFragment(genreId, name)
+                findNavController().navigate(action)
+            },
+            onClickListener = { movieId ->
+                val action = MainGraphDirections.actionGlobalMovieDetailsFragment(movieId)
+                findNavController().navigate(action)
+            }
+        )
 
         binding.rvHome.adapter = genreMovieAdapter
 

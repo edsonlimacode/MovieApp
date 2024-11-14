@@ -78,6 +78,9 @@ dependencies {
     //https://github.com/bumptech/glide
     implementation("com.github.bumptech.glide:glide:4.16.0")
 
+    //https://github.com/Ferfalk/SimpleSearchView
+    implementation("com.github.Ferfalk:SimpleSearchView:0.2.1")
+
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
