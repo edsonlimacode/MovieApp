@@ -1,7 +1,9 @@
 package com.edsonlima.flixapp.domain.mapper
 
+import com.edsonlima.flixapp.data.model.CountryResponse
 import com.edsonlima.flixapp.data.model.GenreResponse
 import com.edsonlima.flixapp.data.model.MovieResponse
+import com.edsonlima.flixapp.domain.model.Country
 import com.edsonlima.flixapp.domain.model.Genre
 import com.edsonlima.flixapp.domain.model.Movie
 import com.edsonlima.flixapp.presenter.model.GenrePresentation
@@ -28,7 +30,14 @@ fun MovieResponse.toDomain(): Movie {
         title = this.title,
         video = this.video,
         voteAverage = this.voteAverage,
-        voteCount = this.voteCount
+        voteCount = this.voteCount,
+        productionCountries = productionCountries?.map { it.toDomain() }
+    )
+}
+
+fun CountryResponse.toDomain(): Country {
+    return Country(
+        name = this.name
     )
 }
 
