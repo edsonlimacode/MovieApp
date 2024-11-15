@@ -44,4 +44,5 @@
         tools:listitem="@layout/item_movie"
         tools:itemCount="5"/>
 
+
 </androidx.constraintlayout.widget.ConstraintLayout>

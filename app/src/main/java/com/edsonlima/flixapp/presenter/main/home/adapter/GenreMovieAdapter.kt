@@ -38,15 +38,15 @@ class GenreMovieAdapter(
 
         fun bind(genre: GenrePresentation) {
 
-            binding.textCategoryTitle.text = genre.name.toString()
-
             val movieAdapter = MovieAdapter(
                 context = binding.root.context,
                 onClickListener = onClickListener
             )
 
             binding.rvGenre.adapter = movieAdapter
+
             movieAdapter.submitList(genre.movies)
+            binding.textCategoryTitle.text = genre.name.toString()
 
             binding.btnSeeAll.setOnClickListener {
                 onClick(genre.id!!, genre.name!!)

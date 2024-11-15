@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -69,17 +70,22 @@ class HomeFragment : Fragment() {
         genreMultabaleList.forEachIndexed { index, genre ->
             homeViewModel.getMoviesByGenreId(genre.id!!).observe(viewLifecycleOwner) { stateView ->
                 when (stateView) {
-                    is StateView.Loading -> {}
+                    is StateView.Loading -> {
+                        binding.pbHome.isVisible = true
+                    }
                     is StateView.Success -> {
+
+                        binding.pbHome.isVisible = false
                         genreMultabaleList[index] = genre.copy(movies = stateView.data?.take(10))
 
                         lifecycleScope.launch {
-                            delay(1000)
+                            delay(500)
                             genreMovieAdapter.submitList(genreMultabaleList)
                         }
                     }
 
                     is StateView.Error -> {
+                        binding.pbHome.isVisible = false
                         Toast.makeText(requireContext(), stateView.message, Toast.LENGTH_SHORT)
                             .show()
                     }
