@@ -81,6 +81,9 @@ dependencies {
     //https://github.com/Ferfalk/SimpleSearchView
     implementation("com.github.Ferfalk:SimpleSearchView:0.2.1")
 
+    //SUPORTE A API MAIS MENOR QUE 26
+    implementation("com.jakewharton.threetenabp:threetenabp:1.4.4")
+
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)

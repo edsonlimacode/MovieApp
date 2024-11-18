@@ -1,6 +1,7 @@
 package com.edsonlima.flixapp.data.api
 
 import com.edsonlima.flixapp.data.model.BasePaginationResponse
+import com.edsonlima.flixapp.data.model.CreditResponse
 import com.edsonlima.flixapp.data.model.GenresResponse
 import com.edsonlima.flixapp.data.model.MovieResponse
 import retrofit2.http.GET
@@ -35,5 +36,19 @@ interface ServiceApi {
         @Query("api_key") apiKey: String,
         @Query("language") language: String,
     ): MovieResponse
+
+    @GET("movie/{movie_id}/credits")
+    suspend fun getCreditsByMovieId(
+        @Path("movie_id") movieId: Int,
+        @Query("api_key") apiKey: String,
+        @Query("language") language: String,
+    ): CreditResponse
+
+    @GET("movie/{movie_id}/similar")
+    suspend fun getSimilarByMovieId(
+        @Path("movie_id") movieId: Int,
+        @Query("api_key") apiKey: String,
+        @Query("language") language: String,
+    ): BasePaginationResponse<List<MovieResponse>>
 
 }

@@ -3,7 +3,6 @@
 
         <item name="colorPrimary">@color/color_default</item>
         <item name="colorPrimaryVariant">@color/color_default</item>
-        <item name="colorOnPrimary">@color/white</item>
 
         <item name="colorSecondary">@color/color_default</item>
         <item name="colorSecondaryVariant">@color/color_default</item>
@@ -22,6 +21,11 @@
     <style name="ToolbarTitleAppearance" parent="@style/TextAppearance.Widget.AppCompat.Toolbar.Title">
         <item name="android:textSize">20sp</item>
         <item name="android:fontFamily">@font/urbanist_700</item>
+    </style>
+
+    <style name="ShapeRoundedImage" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">50%</item>
     </style>
 
     <style name="SearchViewTheme">

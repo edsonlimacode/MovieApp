@@ -1,6 +1,7 @@
 package com.edsonlima.flixapp.data.repository
 
 import com.edsonlima.flixapp.data.api.ServiceApi
+import com.edsonlima.flixapp.data.model.CreditResponse
 import com.edsonlima.flixapp.data.model.GenresResponse
 import com.edsonlima.flixapp.data.model.MovieResponse
 import com.edsonlima.flixapp.domain.repository.IMovieRepository
@@ -35,5 +36,21 @@ class MovieRepository @Inject constructor(
         movieId: Int
     ): MovieResponse {
         return service.getMovieById(movieId, apiKey, language)
+    }
+
+    override suspend fun getCreditsByMovieId(
+        movieId: Int,
+        apiKey: String,
+        language: String
+    ): CreditResponse {
+        return service.getCreditsByMovieId(movieId, apiKey, language)
+    }
+
+    override suspend fun getSimilarByMovieId(
+        movieId: Int,
+        apiKey: String,
+        language: String
+    ): List<MovieResponse> {
+        return service.getSimilarByMovieId(movieId, apiKey, language).results ?: emptyList()
     }
 }

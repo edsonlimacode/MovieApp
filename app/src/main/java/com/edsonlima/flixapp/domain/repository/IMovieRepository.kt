@@ -1,8 +1,8 @@
 package com.edsonlima.flixapp.domain.repository
 
+import com.edsonlima.flixapp.data.model.CreditResponse
 import com.edsonlima.flixapp.data.model.GenresResponse
 import com.edsonlima.flixapp.data.model.MovieResponse
-import retrofit2.http.Query
 
 interface IMovieRepository {
 
@@ -28,4 +28,16 @@ interface IMovieRepository {
         language: String,
         movieId: Int
     ): MovieResponse
+
+    suspend fun getCreditsByMovieId(
+        movieId: Int,
+        apiKey: String,
+        language: String,
+    ): CreditResponse
+
+    suspend fun getSimilarByMovieId(
+        movieId: Int,
+        apiKey: String,
+        language: String,
+    ): List<MovieResponse>
 }
