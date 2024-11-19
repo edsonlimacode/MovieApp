@@ -72,11 +72,13 @@ class MovieDetailsFragment : Fragment() {
 
     private fun initTabs() {
 
-
-
         val viewPagerAdapter = ViewPagerAdapter(requireActivity())
 
-        binding.vpDetails.adapter = viewPagerAdapter
+        val viewPager2HeightAnimator = ViewPager2ViewHeightAnimator()
+
+        viewPager2HeightAnimator.viewPager2 = binding.vpDetails
+
+        viewPager2HeightAnimator.viewPager2?.adapter = viewPagerAdapter
 
         viewPagerAdapter.addFragment(
             TrailerFragment(),
@@ -91,10 +93,11 @@ class MovieDetailsFragment : Fragment() {
             R.string.textComentarios
         )
 
-        TabLayoutMediator(binding.tabDetails, binding.vpDetails) { tab, position ->
-            tab.text = getString(viewPagerAdapter.getTitle(position))
-        }.attach()
-
+        viewPager2HeightAnimator.viewPager2?.let { viewPage2 ->
+            TabLayoutMediator(binding.tabDetails, viewPage2) { tab, position ->
+                tab.text = getString(viewPagerAdapter.getTitle(position))
+            }.attach()
+        }
     }
 
     private fun getMovieById(movieId: Int) {

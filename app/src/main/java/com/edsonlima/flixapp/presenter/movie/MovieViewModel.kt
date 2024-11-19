@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.liveData
 import com.edsonlima.flixapp.BuildConfig
+import com.edsonlima.flixapp.domain.usecase.movie.GetCommentsUseCase
 import com.edsonlima.flixapp.domain.usecase.movie.GetCreditsUseCase
 import com.edsonlima.flixapp.domain.usecase.movie.GetMovieByIdUseCase
 import com.edsonlima.flixapp.domain.usecase.movie.GetMoviesByGenreIdUseCase
@@ -22,11 +23,16 @@ class MovieViewModel @Inject constructor(
     private val searchMoviesByNameUseCase: SearchMoviesByNameUseCase,
     private val getMovieByIdUseCase: GetMovieByIdUseCase,
     private val getCreditsUseCase: GetCreditsUseCase,
-    private val getSimilarByIdUseCase: GetSimilarByIdUseCase
+    private val getSimilarByIdUseCase: GetSimilarByIdUseCase,
+    private val getCommentsUseCase: GetCommentsUseCase
 ) : ViewModel() {
 
     private val _movieId = MutableLiveData(0)
     val movieId: LiveData<Int> = _movieId
+
+    fun getMovieId(movieId: Int) {
+        _movieId.value = movieId
+    }
 
     fun getMoviesByGenreId(genreId: Int) = liveData(Dispatchers.IO) {
 
@@ -103,8 +109,20 @@ class MovieViewModel @Inject constructor(
         }
     }
 
-    fun getMovieId(movieId: Int) {
-        _movieId.value = movieId
+
+    fun getCommentsByMovieId(movieId: Int) = liveData(Dispatchers.IO) {
+
+        try {
+            emit(StateView.Loading())
+
+            val comments = getCommentsUseCase(movieId, BuildConfig.API_KEY, "en-US")
+
+            emit(StateView.Success(comments))
+        } catch (ex: HttpException) {
+            emit(StateView.Error(ex.message))
+        } catch (ex: Exception) {
+            emit(StateView.Error(ex.message))
+        }
     }
 
 }

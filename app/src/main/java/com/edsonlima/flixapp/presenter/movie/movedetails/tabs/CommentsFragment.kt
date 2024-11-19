@@ -5,12 +5,16 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.edsonlima.flixapp.R
 import com.edsonlima.flixapp.databinding.FragmentCommentsBinding
 import com.edsonlima.flixapp.domain.model.AuthorDetails
 import com.edsonlima.flixapp.domain.model.MovieReview
+import com.edsonlima.flixapp.presenter.movie.MovieViewModel
 import com.edsonlima.flixapp.presenter.movie.movedetails.MovieCommentsAdapter
+import com.edsonlima.flixapp.utils.StateView
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -19,6 +23,8 @@ class CommentsFragment : Fragment() {
     private lateinit var movieCommentsAdapter: MovieCommentsAdapter
 
     private lateinit var binding: FragmentCommentsBinding
+
+    private val movieViewModel: MovieViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -34,7 +40,7 @@ class CommentsFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         initRecycler()
-        getComments()
+        initObserver()
     }
 
     private fun initRecycler() {
@@ -45,26 +51,24 @@ class CommentsFragment : Fragment() {
         binding.rvMovieComments.layoutManager = LinearLayoutManager(requireContext())
     }
 
-    private fun getComments() {
-        movieCommentsAdapter.submitList(fakeList())
+    private fun initObserver() {
+        movieViewModel.movieId.observe(viewLifecycleOwner) { movieId ->
+            getComments(movieId)
+        }
     }
 
-    private fun fakeList(): List<MovieReview> {
-        return listOf(
-            MovieReview(
-                author = "thealanfrench",
-                authorDetails = AuthorDetails(
-                    name = "",
-                    username = "thealanfrench",
-                    avatarPath = "/4KVM1VkqmXLOuwj1jjaSdxbvBDk.jpg",
-                    rating = 5
-                ),
-                content = "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
-                createdAt = "2023-03-15T05:13:49.138Z",
-                id = "6411540dfe6c1800bb659ebd",
-                updatedAt = "2023-03-15T05:13:49.138Z",
-                url = "https://www.themoviedb.org/review/6411540dfe6c1800bb659ebd"
-            )
-        )
+    private fun getComments(movieId: Int) {
+        movieViewModel.getCommentsByMovieId(movieId).observe(viewLifecycleOwner) { stateView ->
+            when (stateView) {
+                is StateView.Loading -> {}
+                is StateView.Success -> {
+                    movieCommentsAdapter.submitList(stateView.data)
+                }
+
+                is StateView.Error -> {
+                    Toast.makeText(requireContext(), stateView.message, Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
     }
 }

@@ -3,6 +3,7 @@ package com.edsonlima.flixapp.domain.repository
 import com.edsonlima.flixapp.data.model.CreditResponse
 import com.edsonlima.flixapp.data.model.GenresResponse
 import com.edsonlima.flixapp.data.model.MovieResponse
+import com.edsonlima.flixapp.data.model.MovieReviewResponse
 
 interface IMovieRepository {
 
@@ -40,4 +41,10 @@ interface IMovieRepository {
         apiKey: String,
         language: String,
     ): List<MovieResponse>
+
+    suspend fun getCommentsByMovieId(
+        movieId: Int,
+        apiKey: String,
+        language: String,
+    ): List<MovieReviewResponse>
 }

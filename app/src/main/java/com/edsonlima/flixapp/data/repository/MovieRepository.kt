@@ -4,6 +4,7 @@ import com.edsonlima.flixapp.data.api.ServiceApi
 import com.edsonlima.flixapp.data.model.CreditResponse
 import com.edsonlima.flixapp.data.model.GenresResponse
 import com.edsonlima.flixapp.data.model.MovieResponse
+import com.edsonlima.flixapp.data.model.MovieReviewResponse
 import com.edsonlima.flixapp.domain.repository.IMovieRepository
 import javax.inject.Inject
 
@@ -52,5 +53,13 @@ class MovieRepository @Inject constructor(
         language: String
     ): List<MovieResponse> {
         return service.getSimilarByMovieId(movieId, apiKey, language).results ?: emptyList()
+    }
+
+    override suspend fun getCommentsByMovieId(
+        movieId: Int,
+        apiKey: String,
+        language: String
+    ): List<MovieReviewResponse> {
+        return service.getCommentsByMovieId(movieId, apiKey, language).results ?: emptyList()
     }
 }
