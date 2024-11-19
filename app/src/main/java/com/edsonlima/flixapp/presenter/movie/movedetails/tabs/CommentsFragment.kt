@@ -5,56 +5,66 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.edsonlima.flixapp.R
+import com.edsonlima.flixapp.databinding.FragmentCommentsBinding
+import com.edsonlima.flixapp.domain.model.AuthorDetails
+import com.edsonlima.flixapp.domain.model.MovieReview
+import com.edsonlima.flixapp.presenter.movie.movedetails.MovieCommentsAdapter
+import dagger.hilt.android.AndroidEntryPoint
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [CommentsFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
+@AndroidEntryPoint
 class CommentsFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
+    private lateinit var movieCommentsAdapter: MovieCommentsAdapter
+
+    private lateinit var binding: FragmentCommentsBinding
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_comments, container, false)
+    ): View {
+
+        binding = FragmentCommentsBinding.inflate(inflater, container, false)
+
+        return binding.root
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment CommentsFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            CommentsFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        initRecycler()
+        getComments()
+    }
+
+    private fun initRecycler() {
+        movieCommentsAdapter = MovieCommentsAdapter()
+
+        binding.rvMovieComments.adapter = movieCommentsAdapter
+
+        binding.rvMovieComments.layoutManager = LinearLayoutManager(requireContext())
+    }
+
+    private fun getComments() {
+        movieCommentsAdapter.submitList(fakeList())
+    }
+
+    private fun fakeList(): List<MovieReview> {
+        return listOf(
+            MovieReview(
+                author = "thealanfrench",
+                authorDetails = AuthorDetails(
+                    name = "",
+                    username = "thealanfrench",
+                    avatarPath = "/4KVM1VkqmXLOuwj1jjaSdxbvBDk.jpg",
+                    rating = 5
+                ),
+                content = "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
+                createdAt = "2023-03-15T05:13:49.138Z",
+                id = "6411540dfe6c1800bb659ebd",
+                updatedAt = "2023-03-15T05:13:49.138Z",
+                url = "https://www.themoviedb.org/review/6411540dfe6c1800bb659ebd"
+            )
+        )
     }
 }

@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingVertical="16dp"
+    android:paddingHorizontal="16dp">
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/imgPersonReview"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="8dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/person_comment_placeholder"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:shapeAppearance="@style/ShapeRoundedImage" />
+
+    <TextView
+        android:id="@+id/textPersonName"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:textSize="16sp"
+        android:fontFamily="@font/urbanist_700"
+        android:text="Edson Lima"
+        app:layout_constraintBottom_toBottomOf="@+id/imgPersonReview"
+        app:layout_constraintEnd_toStartOf="@+id/icMore"
+        app:layout_constraintStart_toEndOf="@+id/imgPersonReview"
+        app:layout_constraintTop_toTopOf="@+id/imgPersonReview" />
+
+    <ImageView
+        android:id="@+id/icMore"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_more_circle"
+        app:layout_constraintBottom_toBottomOf="@+id/imgPersonReview"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/imgPersonReview" />
+
+    <TextView
+        android:id="@+id/textDescriptionReview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/urbanist_500"
+        android:ellipsize="end"
+        android:layout_marginTop="16dp"
+        android:maxLines="3"
+        android:text="Nullam volutpat risus nec leo commodo, ut interdum diam laoreet. Sed non consequat odio. Aenean aliquam molestie leo vitae iaculis nisl. Si num tem leite então bota uma pinga aí cumpadi! Negão é teu passadis, eu sou faxa pretis"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imgPersonReview" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="8dp"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textDescriptionReview">
+
+        <ImageView
+            android:id="@+id/imageView8"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            app:srcCompat="@drawable/ic_rating_review" />
+
+        <TextView
+            android:id="@+id/textRatingNumber"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/urbanist_600"
+            android:layout_marginEnd="8dp"
+            android:text="987" />
+
+        <TextView
+            android:id="@+id/textRatingDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/urbanist_500"
+            android:textColor="#616161"
+            android:text="3 dias atrás" />
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

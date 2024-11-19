@@ -70,8 +70,8 @@ class SimilarFragment : Fragment() {
         movieGenreAdapter = MovieGenreAdapter(
             context = requireContext(),
             onClickListener = { movieId ->
-                /* val action = MainGraphDirections.actionGlobalMovieDetailsFragment(movieId)
-                 findNavController().navigate(action)*/
+                 val action = MainGraphDirections.actionGlobalMovieDetailsFragment(movieId)
+                 findNavController().navigate(action)
             }
         )
 
