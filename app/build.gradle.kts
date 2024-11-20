@@ -68,6 +68,10 @@ dependencies {
     implementation("com.google.dagger:hilt-android:2.48.1")
     kapt("com.google.dagger:hilt-android-compiler:2.48.1")
 
+    //Room
+    implementation("androidx.room:room-runtime:2.6.1")
+    kapt("androidx.room:room-compiler:2.6.1")
+
     // ViewModel e LiveData
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.8.5")
     implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.8.5")

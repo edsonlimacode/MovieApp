@@ -45,7 +45,7 @@ class MovieCommentsAdapter :
 
         with(holder) {
 
-            if (movieReview.authorDetails?.avatarPath?.isNotEmpty() == true) {
+            if (movieReview.authorDetails?.avatarPath != null) {
                 Glide.with(binding.root.context)
                     .load("https://image.tmdb.org/t/p/w500${movieReview.authorDetails.avatarPath}")
                     .into(binding.imgPersonReview)
