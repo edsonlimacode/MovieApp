@@ -5,6 +5,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.liveData
 import com.edsonlima.flixapp.BuildConfig
+import com.edsonlima.flixapp.domain.local.usecase.InsertMovieUseCase
+import com.edsonlima.flixapp.domain.model.Movie
 import com.edsonlima.flixapp.domain.usecase.movie.GetCommentsUseCase
 import com.edsonlima.flixapp.domain.usecase.movie.GetCreditsUseCase
 import com.edsonlima.flixapp.domain.usecase.movie.GetMovieByIdUseCase
@@ -24,7 +26,8 @@ class MovieViewModel @Inject constructor(
     private val getMovieByIdUseCase: GetMovieByIdUseCase,
     private val getCreditsUseCase: GetCreditsUseCase,
     private val getSimilarByIdUseCase: GetSimilarByIdUseCase,
-    private val getCommentsUseCase: GetCommentsUseCase
+    private val getCommentsUseCase: GetCommentsUseCase,
+    private val insertMovieUseCase: InsertMovieUseCase
 ) : ViewModel() {
 
     private val _movieId = MutableLiveData(0)
@@ -120,6 +123,20 @@ class MovieViewModel @Inject constructor(
             emit(StateView.Success(comments))
         } catch (ex: HttpException) {
             emit(StateView.Error(ex.message))
+        } catch (ex: Exception) {
+            emit(StateView.Error(ex.message))
+        }
+    }
+
+    fun insertToDatabase(movie: Movie) = liveData(Dispatchers.IO) {
+
+        try {
+            emit(StateView.Loading())
+
+            insertMovieUseCase(movie)
+
+            emit(StateView.Success(Unit))
+
         } catch (ex: Exception) {
             emit(StateView.Error(ex.message))
         }

@@ -1,19 +1,20 @@
 package com.edsonlima.flixapp.presenter.movie.movedetails
 
 import android.os.Bundle
-import android.util.Log
+import android.os.Handler
+import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView.Orientation
 import com.bumptech.glide.Glide
 import com.edsonlima.flixapp.R
+import com.edsonlima.flixapp.databinding.DialogDownloadBinding
 import com.edsonlima.flixapp.databinding.FragmentMovieDetailsBinding
 import com.edsonlima.flixapp.domain.model.Movie
 import com.edsonlima.flixapp.presenter.movie.MovieViewModel
@@ -21,6 +22,7 @@ import com.edsonlima.flixapp.presenter.movie.movedetails.tabs.CommentsFragment
 import com.edsonlima.flixapp.presenter.movie.movedetails.tabs.SimilarFragment
 import com.edsonlima.flixapp.presenter.movie.movedetails.tabs.TrailerFragment
 import com.edsonlima.flixapp.utils.StateView
+import com.edsonlima.flixapp.utils.calculateFileSize
 import com.edsonlima.flixapp.utils.initToolBar
 import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
@@ -37,6 +39,10 @@ class MovieDetailsFragment : Fragment() {
     private val args: MovieDetailsFragmentArgs by navArgs()
 
     private val movieViewModel: MovieViewModel by activityViewModels()
+
+    private lateinit var movie: Movie
+
+    private lateinit var alertDialog: AlertDialog
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -58,6 +64,7 @@ class MovieDetailsFragment : Fragment() {
         initTabs()
         getMovieById(args.movieId)
         getCreditByMovieId(args.movieId)
+        initListeners()
     }
 
     private fun initCreditRecyclerView() {
@@ -107,8 +114,9 @@ class MovieDetailsFragment : Fragment() {
             when (stateView) {
                 is StateView.Loading -> {}
                 is StateView.Success -> {
-                    stateView.data?.let { movie ->
-                        setMovie(movie)
+                    stateView.data?.let { movieResult ->
+                        movie = movieResult
+                        setMovie()
                     }
                 }
 
@@ -121,15 +129,15 @@ class MovieDetailsFragment : Fragment() {
 
     }
 
-    private fun setMovie(movie: Movie) {
+    private fun setMovie() {
 
         Glide.with(requireContext())
-            .load("https://image.tmdb.org/t/p/w500${movie.posterPath}")
+            .load("https://image.tmdb.org/t/p/w500${movie?.posterPath}")
             .into(binding.imgDetail)
 
         binding.textTitleDetail.text = movie.title
 
-        binding.textVoteAverage.text = String.format("%.1f", movie.voteAverage)
+        binding.textVoteAverage.text = String.format("%.1f", movie?.voteAverage)
 
         binding.textCountry.text = movie.productionCountries?.get(0)?.name
 
@@ -159,6 +167,73 @@ class MovieDetailsFragment : Fragment() {
 
         }
 
+    }
+
+    private fun initListeners() {
+        binding.btnDownload.setOnClickListener {
+            initDialog()
+        }
+    }
+
+    private fun initDialog() {
+
+        val dialogDownloadBinding =
+            DialogDownloadBinding.inflate(LayoutInflater.from(requireContext()))
+
+        var progress = 0
+        var downloaded = 0.0
+        val movieDuration = movie.runtime?.toDouble() ?: 0.00
+
+        val handler = Handler(Looper.getMainLooper())
+        val runnable = object : Runnable {
+            override fun run() {
+
+                if (progress < 100) {
+
+                    downloaded += (movieDuration / 100.00)
+                    dialogDownloadBinding.textDownloadSize.text = getString(
+                        R.string.text_dialog_download_size,
+                        downloaded.calculateFileSize(),
+                        movieDuration.calculateFileSize()
+                    )
+
+                    progress++
+                    dialogDownloadBinding.lpiDownload.progress = progress
+
+                    dialogDownloadBinding.textDownloadPorcent.text = getString(
+                        R.string.text_dialog_download_progress,
+                        progress
+                    )
+
+                    handler.postDelayed(this, 100)
+                } else {
+                    insertMovieToDatabase()
+                    alertDialog.dismiss()
+                }
+            }
+        }
+        handler.post(runnable)
+
+        val builder = AlertDialog.Builder(requireContext(), R.style.CustomAlertDialog)
+        builder.setView(dialogDownloadBinding.root)
+
+
+
+        dialogDownloadBinding.btnClose.setOnClickListener {
+            alertDialog.dismiss()
+        }
+
+
+        dialogDownloadBinding.btnOk.setOnClickListener {
+            alertDialog.dismiss()
+        }
+
+        alertDialog = builder.create()
+        alertDialog.show()
+    }
+
+    private fun insertMovieToDatabase() {
+        movieViewModel.insertToDatabase(movie).observe(viewLifecycleOwner){}
     }
 
     private fun getGenreName(movie: Movie): String? {

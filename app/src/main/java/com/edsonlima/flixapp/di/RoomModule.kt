@@ -20,7 +20,7 @@ class RoomModule {
     @Provides
     fun providesRoomDatabase(
         @ApplicationContext context: Context
-    ): RoomDatabase = Room.databaseBuilder(
+    ): AppDatabase = Room.databaseBuilder(
         context,
         AppDatabase::class.java,
         "movie_database"

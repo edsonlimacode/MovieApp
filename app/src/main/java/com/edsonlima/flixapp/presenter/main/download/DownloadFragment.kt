@@ -44,6 +44,7 @@ class DownloadFragment : Fragment() {
         initSearch()
     }
 
+
     private fun initSearch() {
 
         initMenuSearch()
