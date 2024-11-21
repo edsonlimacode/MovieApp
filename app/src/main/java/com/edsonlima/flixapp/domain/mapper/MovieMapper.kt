@@ -1,5 +1,6 @@
 package com.edsonlima.flixapp.domain.mapper
 
+import com.edsonlima.flixapp.data.local.entity.MovieEntity
 import com.edsonlima.flixapp.data.model.AuthorDetailsResponse
 import com.edsonlima.flixapp.data.model.CreditResponse
 import com.edsonlima.flixapp.data.model.CountryResponse
@@ -39,7 +40,8 @@ fun MovieResponse.toDomain(): Movie {
         video = this.video,
         voteAverage = this.voteAverage,
         voteCount = this.voteCount,
-        productionCountries = productionCountries?.map { it.toDomain() }
+        productionCountries = productionCountries?.map { it.toDomain() },
+        runtime = this.runtime
     )
 }
 
@@ -100,3 +102,18 @@ fun Genre.toPresentation(): GenrePresentation {
         movies = emptyList()
     )
 }
+
+fun Movie.toEntity() = MovieEntity(
+    id = this.id,
+    title = this.title,
+    poster = this.posterPath,
+    duration = this.runtime,
+    createdAt = System.currentTimeMillis()
+)
+
+fun MovieEntity.toDomain() = Movie(
+    id = this.id,
+    title = this.title,
+    posterPath  = this.poster,
+    runtime  = this.duration
+)

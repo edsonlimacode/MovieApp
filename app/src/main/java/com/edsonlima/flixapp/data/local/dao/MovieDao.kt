@@ -16,7 +16,7 @@ interface MovieDao {
     suspend fun insert(movieEntity: MovieEntity)
 
     @Query("SELECT * FROM movies")
-    fun getAllUsers(): Flow<List<MovieEntity>>
+    fun getAllMovies(): Flow<List<MovieEntity>>
 
     @Update
     suspend fun update(movieEntity: MovieEntity)

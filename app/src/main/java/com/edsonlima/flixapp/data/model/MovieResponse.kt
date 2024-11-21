@@ -41,6 +41,8 @@ data class MovieResponse(
     @SerializedName("vote_count")
     val voteCount: Int?,
 
+    val runtime: Int?,
+
     @SerializedName("production_countries")
     val productionCountries: List<CountryResponse>?
 )
