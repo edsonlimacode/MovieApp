@@ -9,10 +9,12 @@ import com.bumptech.glide.Glide
 import com.edsonlima.flixapp.R
 import com.edsonlima.flixapp.domain.model.Movie
 import com.edsonlima.flixapp.databinding.ItemMovieDownloadBinding
+import com.edsonlima.flixapp.utils.calculateFileSize
+import com.edsonlima.flixapp.utils.calculateMovieTime
 
 class DownloadAdapter(
     private val detailsOnClickListener: (Int) -> Unit,
-    private val deleteOnClickListener: (Int) -> Unit,
+    private val deleteOnClickListener: (Movie) -> Unit,
 ) : ListAdapter<Movie, DownloadAdapter.DownloadViewHolder>(itemCallback) {
 
 
@@ -57,7 +59,8 @@ class DownloadAdapter(
             }
 
             binding.textMovie.text = movie.title
-            binding.textDuration.text = movie.runtime.toString()
+            binding.textDuration.text = movie.runtime?.calculateMovieTime()
+            binding.textSize.text = movie.runtime?.toDouble()?.calculateFileSize()
 
             binding.cardView3.setOnClickListener {
                 movie.id?.let {
@@ -66,8 +69,8 @@ class DownloadAdapter(
             }
 
             binding.btnDelete.setOnClickListener {
-                movie.id?.let {
-                    deleteOnClickListener(movie.id)
+                movie?.let {
+                    deleteOnClickListener(movie)
                 }
             }
         }

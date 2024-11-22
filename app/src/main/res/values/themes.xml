@@ -53,8 +53,9 @@
     </style>
 
     <!--DIALOG DA TELA DE DOWNLOAD-->
-    <style name="CustomAlertDialog" parent="Theme.Material3.DayNight.Dialog.Alert">
+    <style name="CustomAlertDialog" parent="Theme.Material3.DayNight.Dialog.MinWidth">
         <item name="android:windowBackground">@drawable/bg_dialog</item>
+        <item name="android:windowMinWidthMajor">85%</item>
         <item name="android:windowMinWidthMinor">80%</item>
     </style>
 
