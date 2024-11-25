@@ -8,7 +8,7 @@ import javax.inject.Inject
 class GetGenresUseCase @Inject constructor(
     private val movieRepository: MovieRepository
 ) {
-    suspend operator fun invoke(apiKey: String, langauge: String): List<Genre> {
-        return movieRepository.getGenres(apiKey, langauge).genres.map { it.toDomain() }
+    suspend operator fun invoke(): List<Genre> {
+        return movieRepository.getGenres().genres.map { it.toDomain() }
     }
 }

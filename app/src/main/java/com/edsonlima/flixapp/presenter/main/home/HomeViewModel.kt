@@ -2,7 +2,6 @@ package com.edsonlima.flixapp.presenter.main.home
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.liveData
-import com.edsonlima.flixapp.BuildConfig
 import com.edsonlima.flixapp.domain.mapper.toPresentation
 import com.edsonlima.flixapp.domain.usecase.movie.GetGenresUseCase
 import com.edsonlima.flixapp.domain.usecase.movie.GetMoviesByGenreIdUseCase
@@ -23,7 +22,7 @@ class HomeViewModel @Inject constructor(
         try {
             emit(StateView.Loading())
 
-            val genres = getGenresUseCase(BuildConfig.API_KEY, "pt-BR").map { it.toPresentation() }
+            val genres = getGenresUseCase().map { it.toPresentation() }
 
             emit(StateView.Success(genres))
         } catch (ex: HttpException) {
@@ -38,7 +37,7 @@ class HomeViewModel @Inject constructor(
         try {
             emit(StateView.Loading())
 
-            val genres = getMoviesByGenreIdUseCase(BuildConfig.API_KEY, "pt-BR", genreId)
+            val genres = getMoviesByGenreIdUseCase(genreId)
 
             emit(StateView.Success(genres))
         } catch (ex: HttpException) {

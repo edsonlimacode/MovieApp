@@ -23,6 +23,9 @@ class DownloadViewModel @Inject constructor(
     private val _moviesList = MutableLiveData<List<Movie>>()
     val movieList: LiveData<List<Movie>> = _moviesList
 
+    private val _moviesSearchList = MutableLiveData<List<Movie>>()
+    val movieSearchList: LiveData<List<Movie>> = _moviesSearchList
+
     fun getMovies() = viewModelScope.launch {
 
         getAllMoviesUseCase().collect { movies ->
@@ -37,5 +40,8 @@ class DownloadViewModel @Inject constructor(
         getMovies()
     }
 
+    fun getSearchMovies(search: String) {
+        _moviesSearchList.value = _moviesList.value?.filter { it.title!!.contains(search, true) }
+    }
 
 }

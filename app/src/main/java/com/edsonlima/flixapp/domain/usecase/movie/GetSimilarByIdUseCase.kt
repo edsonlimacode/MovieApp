@@ -8,7 +8,7 @@ import javax.inject.Inject
 class GetSimilarByIdUseCase @Inject constructor(
     private val movieRepository: MovieRepository
 ) {
-    suspend operator fun invoke(apiKey: String, langauge: String, movieId: Int): List<Movie> {
-        return movieRepository.getSimilarByMovieId( movieId, apiKey, langauge).map { it.toDomain() }
+    suspend operator fun invoke(movieId: Int): List<Movie> {
+        return movieRepository.getSimilarByMovieId( movieId).map { it.toDomain() }
     }
 }

@@ -76,7 +76,7 @@ class HomeFragment : Fragment() {
                     is StateView.Success -> {
 
                         binding.pbHome.isVisible = false
-                        genreMultabaleList[index] = genre.copy(movies = stateView.data?.take(10))
+                       // genreMultabaleList[index] = genre.copy(movies = stateView.data?.take(10))
 
                         lifecycleScope.launch {
                             delay(500)

@@ -8,7 +8,7 @@ import javax.inject.Inject
 class GetCreditsUseCase @Inject constructor(
     private val movieRepository: MovieRepository
 ) {
-    suspend operator fun invoke(movieId: Int, apiKey: String, langauge: String): Credit {
-        return movieRepository.getCreditsByMovieId(movieId, apiKey, langauge).toDomain()
+    suspend operator fun invoke(movieId: Int): Credit {
+        return movieRepository.getCreditsByMovieId(movieId).toDomain()
     }
 }

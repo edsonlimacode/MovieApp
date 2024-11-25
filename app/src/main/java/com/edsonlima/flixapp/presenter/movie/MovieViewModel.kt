@@ -4,6 +4,9 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.liveData
+import androidx.lifecycle.viewModelScope
+import androidx.paging.PagingData
+import androidx.paging.cachedIn
 import com.edsonlima.flixapp.BuildConfig
 import com.edsonlima.flixapp.domain.local.usecase.InsertMovieUseCase
 import com.edsonlima.flixapp.domain.model.Movie
@@ -16,6 +19,11 @@ import com.edsonlima.flixapp.domain.usecase.movie.SearchMoviesByNameUseCase
 import com.edsonlima.flixapp.utils.StateView
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 import retrofit2.HttpException
 import javax.inject.Inject
 
@@ -30,41 +38,30 @@ class MovieViewModel @Inject constructor(
     private val insertMovieUseCase: InsertMovieUseCase
 ) : ViewModel() {
 
+    private val _movieList = MutableStateFlow<PagingData<Movie>>(PagingData.empty())
+    val movieList = _movieList.asStateFlow().cachedIn(viewModelScope)
+
     private val _movieId = MutableLiveData(0)
     val movieId: LiveData<Int> = _movieId
+
+    private var currentGenreId: Int? = null
 
     fun getMovieId(movieId: Int) {
         _movieId.value = movieId
     }
 
-    fun getMoviesByGenreId(genreId: Int) = liveData(Dispatchers.IO) {
+    fun getMoviesByGenreId(genreId: Int, isSearch: Boolean = false) = viewModelScope.launch {
 
-        try {
-            emit(StateView.Loading())
-
-            val genres = getMoviesByGenreIdUseCase(BuildConfig.API_KEY, "pt-BR", genreId)
-
-            emit(StateView.Success(genres))
-        } catch (ex: HttpException) {
-            emit(StateView.Error(ex.message))
-        } catch (ex: Exception) {
-            emit(StateView.Error(ex.message))
+        if (genreId != currentGenreId || isSearch) {
+            currentGenreId = genreId
+            getMoviesByGenreIdUseCase(genreId).collect {
+                _movieList.value = it
+            }
         }
     }
 
-    fun searchMoviesByName(query: String?) = liveData(Dispatchers.IO) {
-
-        try {
-            emit(StateView.Loading())
-
-            val movies = searchMoviesByNameUseCase(BuildConfig.API_KEY, "pt-BR", query)
-
-            emit(StateView.Success(movies))
-        } catch (ex: HttpException) {
-            emit(StateView.Error(ex.message))
-        } catch (ex: Exception) {
-            emit(StateView.Error(ex.message))
-        }
+    fun searchMoviesByName(query: String): Flow<PagingData<Movie>> {
+        return searchMoviesByNameUseCase(query)
     }
 
     fun getMovieById(movieId: Int) = liveData(Dispatchers.IO) {
@@ -72,7 +69,7 @@ class MovieViewModel @Inject constructor(
         try {
             emit(StateView.Loading())
 
-            val movies = getMovieByIdUseCase(BuildConfig.API_KEY, "pt-BR", movieId)
+            val movies = getMovieByIdUseCase(movieId)
 
             emit(StateView.Success(movies))
         } catch (ex: HttpException) {
@@ -87,7 +84,7 @@ class MovieViewModel @Inject constructor(
         try {
             emit(StateView.Loading())
 
-            val credits = getCreditsUseCase(movieId, BuildConfig.API_KEY, "pt-BR")
+            val credits = getCreditsUseCase(movieId)
 
             emit(StateView.Success(credits))
         } catch (ex: HttpException) {
@@ -102,7 +99,7 @@ class MovieViewModel @Inject constructor(
         try {
             emit(StateView.Loading())
 
-            val similars = getSimilarByIdUseCase(BuildConfig.API_KEY, "pt-BR", movieId)
+            val similars = getSimilarByIdUseCase(movieId)
 
             emit(StateView.Success(similars))
         } catch (ex: HttpException) {
@@ -118,7 +115,7 @@ class MovieViewModel @Inject constructor(
         try {
             emit(StateView.Loading())
 
-            val comments = getCommentsUseCase(movieId, BuildConfig.API_KEY, "en-US")
+            val comments = getCommentsUseCase(movieId)
 
             emit(StateView.Success(comments))
         } catch (ex: HttpException) {

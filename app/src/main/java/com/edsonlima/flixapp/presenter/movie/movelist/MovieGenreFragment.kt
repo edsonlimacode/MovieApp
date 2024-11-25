@@ -1,6 +1,7 @@
 package com.edsonlima.flixapp.presenter.movie.movelist
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuInflater
@@ -13,8 +14,10 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import androidx.paging.LoadState
 import androidx.recyclerview.widget.GridLayoutManager
 import com.edsonlima.flixapp.MainGraphDirections
 import com.edsonlima.flixapp.R
@@ -25,6 +28,8 @@ import com.edsonlima.flixapp.utils.hideKeyboard
 import com.edsonlima.flixapp.utils.initToolBar
 import com.ferfalk.simplesearchview.SimpleSearchView
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 
 
 @AndroidEntryPoint
@@ -36,7 +41,7 @@ class MovieGenreFragment : Fragment() {
 
     private val movieViewModel: MovieViewModel by viewModels()
 
-    private lateinit var movieGenreAdapter: MovieGenreAdapter
+    private lateinit var movieGenrePagingAdapter: MovieGenrePagingAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -52,6 +57,8 @@ class MovieGenreFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         initToolBar(binding.tbMovieGenre)
+        binding.tbMovieGenre.title = args.name
+
         initRecycler()
         initSearch()
         getMoviesByGenre()
@@ -61,57 +68,19 @@ class MovieGenreFragment : Fragment() {
     private fun getMoviesByGenre() {
 
         movieViewModel.getMoviesByGenreId(args.genreId)
-            .observe(viewLifecycleOwner) { stateView ->
-                when (stateView) {
-                    is StateView.Loading -> {
-                        binding.pbSearch.isVisible = true
 
-                        binding.rvMovieGenre.isVisible = false
-                    }
-
-                    is StateView.Success -> {
-                        binding.pbSearch.isVisible = false
-
-                        binding.tbMovieGenre.title = args.name
-
-                        movieGenreAdapter.submitList(stateView.data)
-
-                        binding.rvMovieGenre.isVisible = true
-                    }
-
-                    is StateView.Error -> {
-                        binding.pbSearch.isVisible = false
-
-                        binding.rvMovieGenre.isVisible = true
-
-                        Toast.makeText(requireContext(), stateView.message, Toast.LENGTH_SHORT)
-                            .show()
-                    }
-                }
+        lifecycleScope.launch {
+            movieViewModel.movieList.collect {
+                movieGenrePagingAdapter.submitData(it)
             }
-
+        }
     }
 
     private fun searchMovies(query: String) {
 
-        movieViewModel.searchMoviesByName(query).observe(viewLifecycleOwner) { stateView ->
-            when (stateView) {
-                is StateView.Loading -> {
-                    binding.pbSearch.isVisible = true
-                    binding.rvMovieGenre.isVisible = false
-                }
-
-                is StateView.Success -> {
-                    binding.pbSearch.isVisible = false
-                    binding.rvMovieGenre.isVisible = true
-                    movieGenreAdapter.submitList(stateView.data)
-                }
-
-                is StateView.Error -> {
-                    binding.pbSearch.isVisible = false
-                    binding.rvMovieGenre.isVisible = true
-                    Toast.makeText(requireContext(), stateView.message, Toast.LENGTH_SHORT).show()
-                }
+        lifecycleScope.launch {
+            movieViewModel.searchMoviesByName(query).collectLatest {
+                movieGenrePagingAdapter.submitData(it)
             }
         }
     }
@@ -187,7 +156,7 @@ class MovieGenreFragment : Fragment() {
 
     private fun initRecycler() {
 
-        movieGenreAdapter = MovieGenreAdapter(
+        movieGenrePagingAdapter = MovieGenrePagingAdapter(
             context = requireContext(),
             onClickListener = { movieId ->
                 val action = MainGraphDirections.actionGlobalMovieDetailsFragment(movieId)
@@ -195,8 +164,49 @@ class MovieGenreFragment : Fragment() {
             }
         )
 
-        binding.rvMovieGenre.adapter = movieGenreAdapter
+        lifecycleScope.launch {
+            movieGenrePagingAdapter.loadStateFlow.collectLatest { loadState ->
+                when (loadState.refresh) {
+                    is LoadState.Loading -> {
+                        binding.rvMovieGenre.isVisible = false
+                        binding.pbSearch.isVisible = true
+                    }
 
-        binding.rvMovieGenre.layoutManager = GridLayoutManager(requireContext(), 2)
+                    is LoadState.NotLoading -> {
+                        binding.rvMovieGenre.isVisible = true
+                        binding.pbSearch.isVisible = false
+                    }
+
+                    is LoadState.Error -> {
+                        binding.rvMovieGenre.isVisible = false
+                        binding.pbSearch.isVisible = false
+
+                        val error = (loadState.refresh as LoadState.Error).error.message
+
+                        Toast.makeText(requireContext(), error, Toast.LENGTH_SHORT).show()
+                    }
+                }
+            }
+        }
+
+        val gridLayoutManager = GridLayoutManager(requireContext(), 2)
+
+        binding.rvMovieGenre.layoutManager = gridLayoutManager
+
+        val footerLayout = movieGenrePagingAdapter.withLoadStateFooter(
+            footer = LoadStatePagingAdapter()
+        )
+
+        binding.rvMovieGenre.adapter = footerLayout
+
+        gridLayoutManager.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
+            override fun getSpanSize(position: Int): Int {
+                return if (position == movieGenrePagingAdapter.itemCount && footerLayout.itemCount > 0) {
+                    2
+                } else {
+                    1
+                }
+            }
+        }
     }
 }

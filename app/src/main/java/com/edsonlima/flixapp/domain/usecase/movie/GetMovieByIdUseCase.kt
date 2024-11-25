@@ -8,7 +8,7 @@ import javax.inject.Inject
 class GetMovieByIdUseCase @Inject constructor(
     private val movieRepository: MovieRepository
 ) {
-    suspend operator fun invoke(apiKey: String, langauge: String, movieId: Int): Movie {
-        return movieRepository.getMovieById(apiKey, langauge, movieId).toDomain()
+    suspend operator fun invoke(movieId: Int): Movie {
+        return movieRepository.getMovieById(movieId).toDomain()
     }
 }

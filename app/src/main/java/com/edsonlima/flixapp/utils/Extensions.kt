@@ -1,10 +1,13 @@
 package com.edsonlima.flixapp.utils
 
 import android.content.Context
+import android.graphics.drawable.Drawable
 import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.swiperefreshlayout.widget.CircularProgressDrawable
 import com.edsonlima.flixapp.R
 import java.text.SimpleDateFormat
 import java.util.*
@@ -15,6 +18,7 @@ fun Fragment.initToolBar(toolbar: Toolbar, isIconBack: Boolean = true) {
     (activity as AppCompatActivity).title = ""
 
     if (isIconBack) {
+
         (activity as AppCompatActivity).supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_back)
         (activity as AppCompatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }
@@ -79,4 +83,18 @@ fun Int.calculateMovieTime(): String {
     val hours = this / 60
     val minutes = this % 60
     return "${hours}h ${minutes}m"
+}
+
+fun Context.circularProgressDrawable(): Drawable {
+    return CircularProgressDrawable(this).apply {
+        strokeWidth = 12f
+        centerRadius = 60f
+        setColorSchemeColors(
+            ContextCompat.getColor(
+                this@circularProgressDrawable,
+                R.color.color_default
+            )
+        )
+        start()
+    }
 }

@@ -9,7 +9,7 @@ import javax.inject.Inject
 class GetCommentsUseCase @Inject constructor(
     private val movieRepository: MovieRepository
 ) {
-    suspend operator fun invoke(movieId: Int, apiKey: String, langauge: String): List<MovieReview> {
-        return movieRepository.getCommentsByMovieId(movieId, apiKey, langauge).map { it.toDomain() }
+    suspend operator fun invoke(movieId: Int): List<MovieReview> {
+        return movieRepository.getCommentsByMovieId(movieId).map { it.toDomain() }
     }
 }

@@ -9,6 +9,7 @@ import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.MenuProvider
+import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.navigation.fragment.findNavController
@@ -49,7 +50,7 @@ class DownloadFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        initToolBar(binding.tbMovieDownload)
+        initToolBar(binding.tbMovieDownload, false)
         initRecycler()
         getMovies()
         initObservers()
@@ -63,6 +64,12 @@ class DownloadFragment : Fragment() {
     private fun initObservers() {
         downloadViewModel.movieList.observe(viewLifecycleOwner) {
             downloadAdapter.submitList(it)
+            isSearchResultEmpty(it.isEmpty())
+        }
+
+        downloadViewModel.movieSearchList.observe(viewLifecycleOwner) {
+            downloadAdapter.submitList(it)
+            isSearchResultEmpty(it.isEmpty())
         }
     }
 
@@ -74,20 +81,14 @@ class DownloadFragment : Fragment() {
             SimpleSearchView.OnQueryTextListener {
 
             override fun onQueryTextSubmit(query: String): Boolean {
-
-                if (query.isNotEmpty()) {
-                    hideKeyboard()
-
-//                    searchMovies(query)
-                    return true
-                } else {
-                    return false
-                }
-
+                return false
             }
 
             override fun onQueryTextChange(newText: String): Boolean {
-                return false
+                if (newText.isNotBlank() || newText.isEmpty()) {
+                    downloadViewModel.getSearchMovies(newText)
+                }
+                return true
             }
 
             override fun onQueryTextCleared(): Boolean {
@@ -98,13 +99,10 @@ class DownloadFragment : Fragment() {
         binding.searchMovieDownload.setOnSearchViewListener(object :
             SimpleSearchView.SearchViewListener {
             override fun onSearchViewShown() {
-                // binding.rvDownloads.isVisible = false
             }
 
             override fun onSearchViewClosed() {
-
-                // binding.rvDownloads.isVisible = true
-                //getMoviesByGenre()
+               downloadViewModel.getMovies()
             }
 
             override fun onSearchViewShownAnimation() {}
@@ -179,5 +177,10 @@ class DownloadFragment : Fragment() {
 
         bottomSheetDialog.show()
 
+    }
+
+    private fun isSearchResultEmpty(empty: Boolean) {
+        binding.rvDownloads.isVisible = !empty
+        binding.llListEmpty.isVisible = empty
     }
 }

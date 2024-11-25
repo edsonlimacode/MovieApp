@@ -1,5 +1,6 @@
 package com.edsonlima.flixapp.domain.repository
 
+import androidx.paging.PagingSource
 import com.edsonlima.flixapp.data.model.CreditResponse
 import com.edsonlima.flixapp.data.model.GenresResponse
 import com.edsonlima.flixapp.data.model.MovieResponse
@@ -7,44 +8,29 @@ import com.edsonlima.flixapp.data.model.MovieReviewResponse
 
 interface IMovieRepository {
 
-    suspend fun getGenres(
-        apiKey: String,
-        language: String
-    ): GenresResponse
+    suspend fun getGenres(): GenresResponse
 
-    suspend fun getMoviesByGenreId(
-        apiKey: String,
-        language: String,
-        genreId: Int,
-    ): List<MovieResponse>
+    fun getMoviesByGenreId(
+        genreId: Int
+    ): PagingSource<Int, MovieResponse>
 
-    suspend fun searchMoviesByName(
-        apiKey: String,
-        language: String,
-        query: String?
-    ): List<MovieResponse>
+    fun searchMoviesByName(
+        query: String
+    ): PagingSource<Int, MovieResponse>
 
     suspend fun getMovieById(
-        apiKey: String,
-        language: String,
         movieId: Int
     ): MovieResponse
 
     suspend fun getCreditsByMovieId(
-        movieId: Int,
-        apiKey: String,
-        language: String,
+        movieId: Int
     ): CreditResponse
 
     suspend fun getSimilarByMovieId(
-        movieId: Int,
-        apiKey: String,
-        language: String,
+        movieId: Int
     ): List<MovieResponse>
 
     suspend fun getCommentsByMovieId(
-        movieId: Int,
-        apiKey: String,
-        language: String,
+        movieId: Int
     ): List<MovieReviewResponse>
 }
