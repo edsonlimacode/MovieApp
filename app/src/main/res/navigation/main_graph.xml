@@ -5,6 +5,8 @@
     android:id="@+id/main_graph"
     app:startDestination="@id/menuHome">
 
+    <include app:graph="@navigation/nav_auth" />
+
     <fragment
         android:id="@+id/menuHome"
         android:name="com.edsonlima.flixapp.presenter.main.home.HomeFragment"
@@ -28,7 +30,11 @@
         android:id="@+id/menuProfile"
         android:name="com.edsonlima.flixapp.presenter.main.profile.ProfileFragment"
         android:label="fragment_profile"
-        tools:layout="@layout/fragment_profile" />
+        tools:layout="@layout/fragment_profile" >
+        <action
+            android:id="@+id/action_menuProfile_to_editProfileFragment2"
+            app:destination="@id/editProfileFragment2" />
+    </fragment>
     <fragment
         android:id="@+id/menuSearch"
         android:name="com.edsonlima.flixapp.presenter.main.search.SearchFragment"
@@ -56,4 +62,9 @@
             app:argType="integer" />
     </fragment>
     <action android:id="@+id/action_global_movieDetailsFragment" app:destination="@id/movieDetailsFragment" />
+    <fragment
+        android:id="@+id/editProfileFragment2"
+        android:name="com.edsonlima.flixapp.presenter.main.profile.EditProfileFragment"
+        android:label="fragment_edit_profile"
+        tools:layout="@layout/fragment_edit_profile" />
 </navigation>

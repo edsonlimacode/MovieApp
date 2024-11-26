@@ -134,7 +134,7 @@ class MovieDetailsFragment : Fragment() {
     private fun setMovie() {
 
         Glide.with(requireContext())
-            .load("https://image.tmdb.org/t/p/w500${movie?.posterPath}")
+            .load("https://image.tmdb.org/t/p/original${movie.backdropPath}")
             .into(binding.imgDetail)
 
         binding.textTitleDetail.text = movie.title

@@ -10,9 +10,13 @@ interface IMovieRepository {
 
     suspend fun getGenres(): GenresResponse
 
-    fun getMoviesByGenreId(
+    fun getMoviesByGenreIdPagination(
         genreId: Int
     ): PagingSource<Int, MovieResponse>
+
+    suspend fun getMoviesByGenreId(
+        genreId: Int
+    ): List<MovieResponse>
 
     fun searchMoviesByName(
         query: String

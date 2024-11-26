@@ -11,7 +11,6 @@ class AuthRepository @Inject constructor(
 
     override suspend fun login(email: String, password: String) {
         auth.signInWithEmailAndPassword(email, password).await()
-
     }
 
     override suspend fun register(email: String, password: String) {
@@ -20,5 +19,9 @@ class AuthRepository @Inject constructor(
 
     override suspend fun forgot(email: String) {
         auth.sendPasswordResetEmail(email).await()
+    }
+
+    override suspend fun logout() {
+        auth.signOut()
     }
 }

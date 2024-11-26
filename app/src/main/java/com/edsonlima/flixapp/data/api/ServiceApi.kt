@@ -20,6 +20,11 @@ interface ServiceApi {
         @Query("page") page: Int
     ): BasePaginationResponse<List<MovieResponse>>
 
+    @GET("discover/movie")
+    suspend fun getMoviesByGenreId(
+        @Query("with_genres") genreId: Int
+    ): BasePaginationResponse<List<MovieResponse>>
+
     @GET("search/movie")
     suspend fun searchMoviesByName(
         @Query("query") query: String?,

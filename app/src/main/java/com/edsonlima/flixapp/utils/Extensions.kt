@@ -1,8 +1,11 @@
 package com.edsonlima.flixapp.utils
 
+import android.app.Activity
 import android.content.Context
+import android.content.Intent
 import android.graphics.drawable.Drawable
 import android.view.inputmethod.InputMethodManager
+import androidx.annotation.IdRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
@@ -129,3 +132,30 @@ fun NavController.navigateAnimated(nav: NavDirections) {
             .build()
     )
 }
+
+const val EXTRA_START_NAV_RES_ID = "EXTRA_START_NAV_RES_ID"
+
+fun <T : AppCompatActivity> Activity.navigateToNavGraph(
+    entryPoint: Class<T>,
+    @IdRes startDestination: Int? = null
+) {
+
+    val intent = Intent(this, entryPoint)
+
+    if (startDestination != null) {
+        intent.putExtra(EXTRA_START_NAV_RES_ID, startDestination)
+    }
+
+    startActivity(intent)
+}
+
+/*
+fun <T : AppCompatActivity> Fragment.navigateToNavGraph(
+    entryPoint: Class<T>,
+    @IdRes startDestination: Int? = null
+) {
+    requireActivity().navigateToNavGraph(
+        entryPoint,
+        startDestination
+    )
+}*/

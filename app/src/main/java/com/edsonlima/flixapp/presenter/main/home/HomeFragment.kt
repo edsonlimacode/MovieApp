@@ -4,21 +4,16 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.edsonlima.flixapp.MainGraphDirections
 import com.edsonlima.flixapp.databinding.FragmentHomeBinding
 import com.edsonlima.flixapp.presenter.main.home.adapter.GenreMovieAdapter
-import com.edsonlima.flixapp.presenter.model.GenrePresentation
 import com.edsonlima.flixapp.utils.StateView
 import com.edsonlima.flixapp.utils.navigateAnimated
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class HomeFragment : Fragment() {
@@ -28,6 +23,11 @@ class HomeFragment : Fragment() {
     private lateinit var binding: FragmentHomeBinding
 
     private lateinit var genreMovieAdapter: GenreMovieAdapter
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        homeViewModel.getGenres()
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -44,56 +44,32 @@ class HomeFragment : Fragment() {
 
         initRecyclerView()
 
-        getGenres()
+        initObservers()
     }
 
-    private fun getGenres() {
-        homeViewModel.getGenres().observe(viewLifecycleOwner) { stateView ->
+    private fun initObservers() {
+        homeViewModel.homeState.observe(viewLifecycleOwner) { stateView ->
             when (stateView) {
-                is StateView.Loading -> {}
+                is StateView.Loading -> {
+                    binding.pbHome.isVisible = true
+                    binding.rvHome.isVisible = false
+                }
                 is StateView.Success -> {
-
-                    stateView.data?.let {
-                        genreMovieAdapter.submitList(it)
-                        getMoviesByGenre(it)
-                    }
+                    binding.pbHome.isVisible = false
+                    binding.rvHome.isVisible = true
                 }
-
-                is StateView.Error -> {}
-            }
-        }
-    }
-
-    private fun getMoviesByGenre(genres: List<GenrePresentation>) {
-
-        val genreMultabaleList = genres.toMutableList()
-
-        genreMultabaleList.forEachIndexed { index, genre ->
-            homeViewModel.getMoviesByGenreId(genre.id!!).observe(viewLifecycleOwner) { stateView ->
-                when (stateView) {
-                    is StateView.Loading -> {
-                        binding.pbHome.isVisible = true
-                    }
-                    is StateView.Success -> {
-
-                        binding.pbHome.isVisible = false
-                       // genreMultabaleList[index] = genre.copy(movies = stateView.data?.take(10))
-
-                        lifecycleScope.launch {
-                            delay(500)
-                            genreMovieAdapter.submitList(genreMultabaleList)
-                        }
-                    }
-
-                    is StateView.Error -> {
-                        binding.pbHome.isVisible = false
-                        Toast.makeText(requireContext(), stateView.message, Toast.LENGTH_SHORT)
-                            .show()
-                    }
+                is StateView.Error -> {
+                    binding.pbHome.isVisible = false
+                    binding.rvHome.isVisible = true
                 }
             }
         }
+
+        homeViewModel.movieList.observe(viewLifecycleOwner) { movieList ->
+            genreMovieAdapter.submitList(movieList)
+        }
     }
+
 
     private fun initRecyclerView() {
 

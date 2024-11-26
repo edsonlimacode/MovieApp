@@ -34,7 +34,7 @@ class OnBoardingFragment : Fragment() {
 
     private fun initListeners() {
         binding.btnOnBoard.setOnClickListener {
-            findNavController().navigateAnimated(R.id.action_onBoardingFragment_to_authentication)
+            findNavController().navigateAnimated(R.id.action_onBoardingFragment_to_homeAuthFragment)
         }
     }
 }

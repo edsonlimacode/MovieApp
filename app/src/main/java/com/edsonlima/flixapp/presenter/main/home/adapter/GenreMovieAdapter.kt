@@ -1,31 +1,30 @@
 package com.edsonlima.flixapp.presenter.main.home.adapter
 
-import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.edsonlima.flixapp.databinding.ItemGenreMovieBinding
-import com.edsonlima.flixapp.presenter.model.GenrePresentation
+import com.edsonlima.flixapp.domain.model.MovieByGenre
 
 class GenreMovieAdapter(
     private val onClick: (Int, String) -> Unit,
     private val onClickListener: (Int) -> Unit
-) : ListAdapter<GenrePresentation, GenreMovieAdapter.MovieViewHolder>(diffCallback) {
+) : ListAdapter<MovieByGenre, GenreMovieAdapter.MovieViewHolder>(diffCallback) {
 
     companion object {
-        val diffCallback = object : DiffUtil.ItemCallback<GenrePresentation>() {
+        val diffCallback = object : DiffUtil.ItemCallback<MovieByGenre>() {
             override fun areItemsTheSame(
-                oldItem: GenrePresentation,
-                newItem: GenrePresentation
+                oldItem: MovieByGenre,
+                newItem: MovieByGenre
             ): Boolean {
                 return oldItem.id == newItem.id
             }
 
             override fun areContentsTheSame(
-                oldItem: GenrePresentation,
-                newItem: GenrePresentation
+                oldItem: MovieByGenre,
+                newItem: MovieByGenre
             ): Boolean {
                 return oldItem == newItem
             }
@@ -36,7 +35,9 @@ class GenreMovieAdapter(
         private val binding: ItemGenreMovieBinding
     ) : ViewHolder(binding.root) {
 
-        fun bind(genre: GenrePresentation) {
+        fun bind(genre: MovieByGenre) {
+
+            binding.textCategoryTitle.text = genre.name.toString()
 
             val movieAdapter = MovieAdapter(
                 context = binding.root.context,
@@ -46,7 +47,7 @@ class GenreMovieAdapter(
             binding.rvGenre.adapter = movieAdapter
 
             movieAdapter.submitList(genre.movies)
-            binding.textCategoryTitle.text = genre.name.toString()
+
 
             binding.btnSeeAll.setOnClickListener {
                 onClick(genre.id!!, genre.name!!)

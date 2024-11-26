@@ -18,10 +18,14 @@ class MovieRepository @Inject constructor(
         return service.getGenres()
     }
 
-    override fun getMoviesByGenreId(
+    override fun getMoviesByGenreIdPagination(
         genreId: Int
     ): PagingSource<Int, MovieResponse> {
         return MoviePagingSource(service, genreId)
+    }
+
+    override suspend fun getMoviesByGenreId(genreId: Int): List<MovieResponse> {
+        return service.getMoviesByGenreId(genreId).results ?: emptyList()
     }
 
     override fun searchMoviesByName(
