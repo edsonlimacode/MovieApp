@@ -13,19 +13,17 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.FlixApp"
+        android:theme="@style/Theme.AppSplashScreen"
         tools:targetApi="31">
-        <activity
-            android:name=".presenter.testeActivity"
-            android:exported="false" />
+
         <activity
             android:name=".presenter.main.MainActivity"
+            android:theme="@style/Theme.FlixApp"
             android:exported="false" />
         <activity
             android:name=".presenter.auth.AuthActivity"
             android:exported="true"
             android:screenOrientation="portrait"
-            android:theme="@style/Theme.FlixApp"
             tools:ignore="DiscouragedApi">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

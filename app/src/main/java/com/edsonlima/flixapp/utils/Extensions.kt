@@ -7,6 +7,10 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.navigation.NavController
+import androidx.navigation.NavDirections
+import androidx.navigation.NavOptions
+import androidx.navigation.fragment.findNavController
 import androidx.swiperefreshlayout.widget.CircularProgressDrawable
 import com.edsonlima.flixapp.R
 import java.text.SimpleDateFormat
@@ -50,7 +54,8 @@ fun formatCommentDate(date: String?): String {
 
     val yearDifference = calendarCurrent.get(Calendar.YEAR) - calendarProvided.get(Calendar.YEAR)
     val monthDifference = calendarCurrent.get(Calendar.MONTH) - calendarProvided.get(Calendar.MONTH)
-    val dayDifference = calendarCurrent.get(Calendar.DAY_OF_MONTH) - calendarProvided.get(Calendar.DAY_OF_MONTH)
+    val dayDifference =
+        calendarCurrent.get(Calendar.DAY_OF_MONTH) - calendarProvided.get(Calendar.DAY_OF_MONTH)
 
     val totalDaysDifference = yearDifference * 365 + monthDifference * 30 + dayDifference
 
@@ -97,4 +102,30 @@ fun Context.circularProgressDrawable(): Drawable {
         )
         start()
     }
+}
+
+fun NavController.navigateAnimated(action: Int) {
+    this.navigate(
+        action,
+        null,
+        NavOptions.Builder()
+            .setEnterAnim(R.anim.enter)
+            .setExitAnim(R.anim.exit)
+            .setPopEnterAnim(R.anim.pop_enter)
+            .setPopExitAnim(R.anim.exit)
+            .build()
+    )
+}
+
+fun NavController.navigateAnimated(nav: NavDirections) {
+    this.navigate(
+        nav.actionId,
+        nav.arguments,
+        NavOptions.Builder()
+            .setEnterAnim(R.anim.enter)
+            .setExitAnim(R.anim.exit)
+            .setPopEnterAnim(R.anim.pop_enter)
+            .setPopExitAnim(R.anim.exit)
+            .build()
+    )
 }

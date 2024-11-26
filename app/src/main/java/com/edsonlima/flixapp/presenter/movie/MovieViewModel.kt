@@ -7,7 +7,6 @@ import androidx.lifecycle.liveData
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
-import com.edsonlima.flixapp.BuildConfig
 import com.edsonlima.flixapp.domain.local.usecase.InsertMovieUseCase
 import com.edsonlima.flixapp.domain.model.Movie
 import com.edsonlima.flixapp.domain.usecase.movie.GetCommentsUseCase
@@ -22,7 +21,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import retrofit2.HttpException
 import javax.inject.Inject
@@ -41,7 +39,7 @@ class MovieViewModel @Inject constructor(
     private val _movieList = MutableStateFlow<PagingData<Movie>>(PagingData.empty())
     val movieList = _movieList.asStateFlow().cachedIn(viewModelScope)
 
-    private val _movieId = MutableLiveData(0)
+    private val _movieId = MutableLiveData<Int>()
     val movieId: LiveData<Int> = _movieId
 
     private var currentGenreId: Int? = null
@@ -99,9 +97,9 @@ class MovieViewModel @Inject constructor(
         try {
             emit(StateView.Loading())
 
-            val similars = getSimilarByIdUseCase(movieId)
+            val similar = getSimilarByIdUseCase(movieId)
 
-            emit(StateView.Success(similars))
+            emit(StateView.Success(similar))
         } catch (ex: HttpException) {
             emit(StateView.Error(ex.message))
         } catch (ex: Exception) {

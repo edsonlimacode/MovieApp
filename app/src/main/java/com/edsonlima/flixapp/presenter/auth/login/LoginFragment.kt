@@ -19,6 +19,7 @@ import com.edsonlima.flixapp.utils.FirebaseHelper
 import com.edsonlima.flixapp.utils.StateView
 import com.edsonlima.flixapp.utils.hideKeyboard
 import com.edsonlima.flixapp.utils.initToolBar
+import com.edsonlima.flixapp.utils.navigateAnimated
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -57,7 +58,7 @@ class LoginFragment : Fragment() {
         }
 
         binding.btnForgotPassword.setOnClickListener {
-            findNavController().navigate(R.id.action_loginFragment_to_forgotFragment)
+            findNavController().navigateAnimated(R.id.action_loginFragment_to_forgotFragment)
         }
 
     }

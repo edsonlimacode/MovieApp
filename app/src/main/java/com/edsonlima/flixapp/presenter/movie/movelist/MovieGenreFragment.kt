@@ -26,6 +26,7 @@ import com.edsonlima.flixapp.presenter.movie.MovieViewModel
 import com.edsonlima.flixapp.utils.StateView
 import com.edsonlima.flixapp.utils.hideKeyboard
 import com.edsonlima.flixapp.utils.initToolBar
+import com.edsonlima.flixapp.utils.navigateAnimated
 import com.ferfalk.simplesearchview.SimpleSearchView
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
@@ -160,7 +161,7 @@ class MovieGenreFragment : Fragment() {
             context = requireContext(),
             onClickListener = { movieId ->
                 val action = MainGraphDirections.actionGlobalMovieDetailsFragment(movieId)
-                findNavController().navigate(action)
+                findNavController().navigateAnimated(action)
             }
         )
 

@@ -15,6 +15,7 @@ import com.edsonlima.flixapp.databinding.FragmentHomeBinding
 import com.edsonlima.flixapp.presenter.main.home.adapter.GenreMovieAdapter
 import com.edsonlima.flixapp.presenter.model.GenrePresentation
 import com.edsonlima.flixapp.utils.StateView
+import com.edsonlima.flixapp.utils.navigateAnimated
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -100,11 +101,11 @@ class HomeFragment : Fragment() {
             onClick = { genreId, name ->
                 val action =
                     HomeFragmentDirections.actionMenuHomeToMovieGenreFragment(genreId, name)
-                findNavController().navigate(action)
+                findNavController().navigateAnimated(action)
             },
             onClickListener = { movieId ->
                 val action = MainGraphDirections.actionGlobalMovieDetailsFragment(movieId)
-                findNavController().navigate(action)
+                findNavController().navigateAnimated(action)
             }
         )
 

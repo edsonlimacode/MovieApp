@@ -24,6 +24,7 @@ import com.edsonlima.flixapp.utils.calculateFileSize
 import com.edsonlima.flixapp.utils.calculateMovieTime
 import com.edsonlima.flixapp.utils.hideKeyboard
 import com.edsonlima.flixapp.utils.initToolBar
+import com.edsonlima.flixapp.utils.navigateAnimated
 import com.ferfalk.simplesearchview.SimpleSearchView
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import dagger.hilt.android.AndroidEntryPoint
@@ -138,7 +139,7 @@ class DownloadFragment : Fragment() {
         downloadAdapter = DownloadAdapter(
             detailsOnClickListener = { movieId ->
                 val action = MainGraphDirections.actionGlobalMovieDetailsFragment(movieId)
-                findNavController().navigate(action)
+                findNavController().navigateAnimated(action)
             },
             deleteOnClickListener = { movie ->
                 initDeleteBottomSheet(movie)

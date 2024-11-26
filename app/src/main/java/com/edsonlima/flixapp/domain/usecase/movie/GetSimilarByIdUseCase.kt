@@ -9,6 +9,6 @@ class GetSimilarByIdUseCase @Inject constructor(
     private val movieRepository: MovieRepository
 ) {
     suspend operator fun invoke(movieId: Int): List<Movie> {
-        return movieRepository.getSimilarByMovieId( movieId).map { it.toDomain() }
+        return movieRepository.getSimilarByMovieId( movieId).map { it.toDomain() }.filter { it.posterPath != null }
     }
 }

@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import com.edsonlima.flixapp.R
 import com.edsonlima.flixapp.databinding.FragmentHomeAuthBinding
+import com.edsonlima.flixapp.utils.navigateAnimated
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -34,11 +35,11 @@ class HomeAuthFragment : Fragment() {
     private fun initListeners() {
 
         binding.btnSiginInCredentials.setOnClickListener {
-            findNavController().navigate(R.id.action_homeAuthFragment_to_loginFragment)
+            findNavController().navigateAnimated(R.id.action_homeAuthFragment_to_loginFragment)
         }
 
         binding.btnRegister.setOnClickListener {
-            findNavController().navigate(R.id.action_homeAuthFragment_to_registerFragment)
+            findNavController().navigateAnimated(R.id.action_homeAuthFragment_to_registerFragment)
         }
 
     }

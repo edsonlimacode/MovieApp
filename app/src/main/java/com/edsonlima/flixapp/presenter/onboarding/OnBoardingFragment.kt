@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import com.edsonlima.flixapp.R
 import com.edsonlima.flixapp.databinding.FragmentOnBoardingBinding
+import com.edsonlima.flixapp.utils.navigateAnimated
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -33,7 +34,7 @@ class OnBoardingFragment : Fragment() {
 
     private fun initListeners() {
         binding.btnOnBoard.setOnClickListener {
-            findNavController().navigate(R.id.action_onBoardingFragment_to_authentication)
+            findNavController().navigateAnimated(R.id.action_onBoardingFragment_to_authentication)
         }
     }
 }
