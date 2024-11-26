@@ -12,12 +12,18 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
-class GetMoviesByGenreIdUseCase @Inject constructor(
+class GetMoviesByGenreIdPaginationUseCase @Inject constructor(
     private val movieRepository: MovieRepository
 ) {
-    suspend operator fun invoke(
+    operator fun invoke(
         genreId: Int
-    ): List<Movie> {
-        return movieRepository.getMoviesByGenreId(genreId).map { it.toDomain() }
-    }
+    ): Flow<PagingData<Movie>> =
+        Pager(
+            config = PagingConfig(pageSize = PAGE_MAX_SIZE, enablePlaceholders = false),
+            pagingSourceFactory = {
+                movieRepository.getMoviesByGenreIdPagination(genreId)
+            }
+        ).flow.map {
+            it.map { it.toDomain() }
+        }
 }

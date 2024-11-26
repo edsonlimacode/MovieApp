@@ -5,7 +5,7 @@ import com.edsonlima.flixapp.domain.model.Movie
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
-data class GenrePresentation(
+data class MovieByGenre(
     val id: Int?,
     val name: String?,
     val movies: List<Movie>?

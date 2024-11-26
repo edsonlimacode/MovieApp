@@ -12,7 +12,7 @@ import com.edsonlima.flixapp.domain.model.Movie
 import com.edsonlima.flixapp.domain.usecase.movie.GetCommentsUseCase
 import com.edsonlima.flixapp.domain.usecase.movie.GetCreditsUseCase
 import com.edsonlima.flixapp.domain.usecase.movie.GetMovieByIdUseCase
-import com.edsonlima.flixapp.domain.usecase.movie.GetMoviesByGenreIdUseCase
+import com.edsonlima.flixapp.domain.usecase.movie.GetMoviesByGenreIdPaginationUseCase
 import com.edsonlima.flixapp.domain.usecase.movie.GetSimilarByIdUseCase
 import com.edsonlima.flixapp.domain.usecase.movie.SearchMoviesByNameUseCase
 import com.edsonlima.flixapp.utils.StateView
@@ -27,7 +27,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class MovieViewModel @Inject constructor(
-    private val getMoviesByGenreIdUseCase: GetMoviesByGenreIdUseCase,
+    private val getMoviesByGenreIdPaginationUseCase: GetMoviesByGenreIdPaginationUseCase,
     private val searchMoviesByNameUseCase: SearchMoviesByNameUseCase,
     private val getMovieByIdUseCase: GetMovieByIdUseCase,
     private val getCreditsUseCase: GetCreditsUseCase,
@@ -52,7 +52,7 @@ class MovieViewModel @Inject constructor(
 
         if (genreId != currentGenreId || isSearch) {
             currentGenreId = genreId
-            getMoviesByGenreIdUseCase(genreId).collect {
+            getMoviesByGenreIdPaginationUseCase(genreId).collect {
                 _movieList.value = it
             }
         }
