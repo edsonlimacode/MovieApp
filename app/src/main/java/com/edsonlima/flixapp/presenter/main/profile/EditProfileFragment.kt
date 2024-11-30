@@ -10,11 +10,13 @@ import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import com.edsonlima.flixapp.R
+import com.edsonlima.flixapp.databinding.BottomSheetProfileBinding
 import com.edsonlima.flixapp.databinding.FragmentEditProfileBinding
 import com.edsonlima.flixapp.domain.model.User
 import com.edsonlima.flixapp.utils.FirebaseHelper
 import com.edsonlima.flixapp.utils.StateView
 import com.edsonlima.flixapp.utils.initToolBar
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -58,6 +60,27 @@ class EditProfileFragment : Fragment() {
     }
 
     private fun initListeners() {
+
+        binding.btnSelectPhoto.setOnClickListener {
+
+            val bottomSheet = BottomSheetDialog(requireContext())
+
+            val bottomSheetProfileBinding =
+                BottomSheetProfileBinding.inflate(layoutInflater, null, false)
+
+            bottomSheet.setContentView(bottomSheetProfileBinding.root)
+
+            bottomSheetProfileBinding.btnCamera.setOnClickListener {
+                bottomSheet.dismiss()
+            }
+
+            bottomSheetProfileBinding.btnGallery.setOnClickListener {
+                bottomSheet.dismiss()
+            }
+
+            bottomSheet.show()
+        }
+
         binding.btnUpdateProfile.setOnClickListener {
             validate()
         }
@@ -125,6 +148,7 @@ class EditProfileFragment : Fragment() {
                 is StateView.Loading -> {
                     binding.pbProfile.isVisible = true
                 }
+
                 is StateView.Success -> {
 
                     binding.pbProfile.isVisible = false
@@ -144,6 +168,7 @@ class EditProfileFragment : Fragment() {
                     binding.editEmailProfile.setText(FirebaseHelper.getAuth().currentUser?.email)
 
                 }
+
                 is StateView.Error -> {
                     binding.pbProfile.isVisible = false
                     Toast.makeText(requireContext(), stateView.message, Toast.LENGTH_SHORT).show()

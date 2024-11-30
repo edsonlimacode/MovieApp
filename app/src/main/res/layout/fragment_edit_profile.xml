@@ -70,6 +70,7 @@
                     app:shapeAppearance="@style/ShapeRoundedImage" />
 
                 <ImageView
+                    android:id="@+id/btnSelectPhoto"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="bottom|end"
