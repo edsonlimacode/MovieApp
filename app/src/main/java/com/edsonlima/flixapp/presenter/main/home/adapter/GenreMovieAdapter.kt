@@ -7,7 +7,6 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.edsonlima.flixapp.databinding.ItemGenreMovieBinding
 import com.edsonlima.flixapp.domain.model.MovieByGenre
-
 class GenreMovieAdapter(
     private val onClick: (Int, String) -> Unit,
     private val onClickListener: (Int) -> Unit

@@ -29,8 +29,6 @@ class HomeViewModel @Inject constructor(
 
         try {
 
-            _homeState.postValue(StateView.Loading())
-
             val genres = getGenresUseCase()
             getMoviesByGenreId(genres)
 
