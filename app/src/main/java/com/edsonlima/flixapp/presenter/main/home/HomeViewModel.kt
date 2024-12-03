@@ -25,9 +25,9 @@ class HomeViewModel @Inject constructor(
     private val _homeState = MutableLiveData<StateView<Unit?>>()
     val homeState: LiveData<StateView<Unit?>> = _homeState
 
-     fun getGenres() = viewModelScope.launch {
-
+    fun getGenres() = viewModelScope.launch {
         try {
+            _homeState.value = StateView.Loading()
 
             val genres = getGenresUseCase()
             getMoviesByGenreId(genres)

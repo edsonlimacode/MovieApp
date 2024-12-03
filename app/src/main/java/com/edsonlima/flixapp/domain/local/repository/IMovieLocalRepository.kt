@@ -9,5 +9,6 @@ interface IMovieLocalRepository {
     fun getAllMovies(): Flow<List<MovieEntity>>
     suspend fun update(movieEntity: MovieEntity)
     suspend fun delete(movieEntity: MovieEntity)
+    suspend fun saveImage(image: String?)
 
 }

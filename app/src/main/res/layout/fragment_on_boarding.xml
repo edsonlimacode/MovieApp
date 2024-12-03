@@ -35,11 +35,12 @@
         android:id="@+id/btnOnBoard"
         android:layout_width="0dp"
         android:layout_height="55dp"
-        android:text="Começar"
-        android:fontFamily="@font/urbanist_700"
-        android:layout_marginBottom="32dp"
         android:layout_marginHorizontal="24dp"
+        android:layout_marginBottom="40dp"
+        android:fontFamily="@font/urbanist_700"
+        android:text="Começar"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.666"
         app:layout_constraintStart_toStartOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

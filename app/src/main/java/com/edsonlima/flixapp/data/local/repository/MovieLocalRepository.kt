@@ -24,4 +24,8 @@ class MovieLocalRepository @Inject constructor(
     override suspend fun delete(movieEntity: MovieEntity) {
         movieDao.delete(movieEntity)
     }
+
+    override suspend fun saveImage(image: String?) {
+        TODO("Not yet implemented")
+    }
 }

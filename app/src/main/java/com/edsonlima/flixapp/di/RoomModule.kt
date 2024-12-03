@@ -2,7 +2,6 @@ package com.edsonlima.flixapp.di
 
 import android.content.Context
 import androidx.room.Room
-import androidx.room.RoomDatabase
 import com.edsonlima.flixapp.data.local.dao.MovieDao
 import com.edsonlima.flixapp.data.local.db.AppDatabase
 import dagger.Module
@@ -30,6 +29,7 @@ class RoomModule {
     @Provides
     fun providesMovieDao(
         database: AppDatabase
-    ): MovieDao = database.userDao()
+    ): MovieDao = database.movieDao()
+
 
 }

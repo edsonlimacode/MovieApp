@@ -7,7 +7,7 @@ import androidx.lifecycle.liveData
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
-import com.edsonlima.flixapp.domain.local.usecase.InsertMovieUseCase
+import com.edsonlima.flixapp.domain.local.usecase.movie.InsertMovieUseCase
 import com.edsonlima.flixapp.domain.model.Movie
 import com.edsonlima.flixapp.domain.usecase.movie.GetCommentsUseCase
 import com.edsonlima.flixapp.domain.usecase.movie.GetCreditsUseCase

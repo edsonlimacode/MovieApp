@@ -7,5 +7,4 @@ import com.edsonlima.flixapp.data.local.entity.MovieEntity
 
 @Database(entities = [MovieEntity::class], version = 1)
 abstract class AppDatabase : RoomDatabase() {
-    abstract fun userDao(): MovieDao
-}
+    abstract fun movieDao(): MovieDao }
