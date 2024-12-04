@@ -10,8 +10,8 @@ import com.edsonlima.flixapp.R
 import com.edsonlima.flixapp.databinding.ItemCreditBinding
 import com.edsonlima.flixapp.domain.model.Person
 
-class MovieCreditAdapter() :
-    ListAdapter<Person, MovieCreditAdapter.CreditViewHolder>(itemCallback) {
+class MovieAuthorAdapter() :
+    ListAdapter<Person, MovieAuthorAdapter.CreditViewHolder>(itemCallback) {
 
     companion object {
         val itemCallback = object : DiffUtil.ItemCallback<Person>() {

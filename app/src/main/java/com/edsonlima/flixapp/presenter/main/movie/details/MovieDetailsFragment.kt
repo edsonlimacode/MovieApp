@@ -17,7 +17,6 @@ import com.edsonlima.flixapp.R
 import com.edsonlima.flixapp.databinding.DialogDownloadBinding
 import com.edsonlima.flixapp.databinding.FragmentMovieDetailsBinding
 import com.edsonlima.flixapp.domain.model.Movie
-import com.edsonlima.flixapp.presenter.main.movie.genre.MovieGenreViewModel
 import com.edsonlima.flixapp.presenter.main.movie.details.tabs.comments.CommentsFragment
 import com.edsonlima.flixapp.presenter.main.movie.details.tabs.similar.SimilarFragment
 import com.edsonlima.flixapp.presenter.main.movie.details.tabs.trailer.TrailerFragment
@@ -34,7 +33,7 @@ class MovieDetailsFragment : Fragment() {
 
     private lateinit var binding: FragmentMovieDetailsBinding
 
-    private lateinit var movieCreditAdapter: MovieCreditAdapter
+    private lateinit var movieAuthorAdapter: MovieAuthorAdapter
 
     private val args: MovieDetailsFragmentArgs by navArgs()
 
@@ -67,9 +66,9 @@ class MovieDetailsFragment : Fragment() {
 
     private fun initCreditRecyclerView() {
 
-        movieCreditAdapter = MovieCreditAdapter()
+        movieAuthorAdapter = MovieAuthorAdapter()
 
-        binding.rvCredit.adapter = movieCreditAdapter
+        binding.rvCredit.adapter = movieAuthorAdapter
 
         binding.rvCredit.layoutManager =
             LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
@@ -165,7 +164,7 @@ class MovieDetailsFragment : Fragment() {
                 is StateView.Loading -> {}
                 is StateView.Success -> {
                     stateView.data?.let { credit ->
-                        movieCreditAdapter.submitList(credit.cast)
+                        movieAuthorAdapter.submitList(credit.cast)
                     }
                 }
 

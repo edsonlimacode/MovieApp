@@ -4,6 +4,7 @@
 
         <item name="colorPrimary">@color/color_default</item>
         <item name="colorPrimaryVariant">@color/color_default</item>
+        <item name="android:textColor">@color/dark_900</item>
 
         <item name="colorSecondary">@color/color_default</item>
         <item name="colorSecondaryVariant">@color/color_default</item>
@@ -57,6 +58,10 @@
         <item name="android:windowBackground">@drawable/bg_dialog</item>
         <item name="android:windowMinWidthMajor">85%</item>
         <item name="android:windowMinWidthMinor">80%</item>
+    </style>
+
+    <style name="TextColorTheme" parent="Theme.Material3.DayNight.NoActionBar">
+        <item name="android:textColorPrimary">@color/dark_900</item>
     </style>
 
 </resources>

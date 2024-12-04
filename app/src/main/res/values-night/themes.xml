@@ -1,7 +1,30 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Base application theme. -->
+
     <style name="Base.Theme.FlixApp" parent="Theme.Material3.DayNight.NoActionBar">
-        <!-- Customize your dark theme here. -->
-        <!-- <item name="colorPrimary">@color/my_dark_primary</item> -->
+
+        <item name="colorPrimary">@color/color_default</item>
+        <item name="colorOnPrimary">@color/white</item>
+        <item name="android:windowBackground">@color/dark_950</item>
+        <item name="android:textColor">@color/dark_300</item>
+
+    </style>
+
+    <!--Toolbar-->
+    <style name="ToolbarTitleAppearance" parent="@style/TextAppearance.Widget.AppCompat.Toolbar.Title">
+        <item name="android:textSize">20sp</item>
+        <item name="android:titleTextColor">@color/dark_300</item>
+        <item name="android:fontFamily">@font/urbanist_700</item>
+    </style>
+
+    <!-- TELA VER TODOS -->
+    <style name="SearchViewTheme">
+        <item name="colorSecondary">#212121</item>
+        <item name="searchBackground">@color/dark_900</item>
+        <item name="android:inputType">text</item>
+        <item name="android:hint">@string/search_hint</item>
+        <item name="hintColor">#33212121</item>
+        <item name="backIconTint">@color/dark_400</item>
+        <item name="android:textColor">@color/dark_300</item>
+        <item name="iconsTint">@color/dark_400</item>
     </style>
 </resources>

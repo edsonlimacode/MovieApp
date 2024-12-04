@@ -2,7 +2,7 @@ package com.edsonlima.flixapp.di
 
 import com.edsonlima.flixapp.BuildConfig
 import com.edsonlima.flixapp.data.api.ServiceApi
-import com.edsonlima.flixapp.httpInterceptor.QueryParameterInterceptor
+import com.edsonlima.flixapp.data.interceptor.QueryParameterInterceptor
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

@@ -1,4 +1,4 @@
-package com.edsonlima.flixapp.httpInterceptor
+package com.edsonlima.flixapp.data.interceptor
 
 import com.edsonlima.flixapp.BuildConfig
 import okhttp3.Interceptor
