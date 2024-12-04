@@ -1,6 +1,5 @@
-package com.edsonlima.flixapp.presenter.movie.movedetails
+package com.edsonlima.flixapp.presenter.main.movie.details
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
@@ -10,7 +9,6 @@ import com.bumptech.glide.Glide
 import com.edsonlima.flixapp.R
 import com.edsonlima.flixapp.databinding.ItemCreditBinding
 import com.edsonlima.flixapp.domain.model.Person
-import kotlin.math.log
 
 class MovieCreditAdapter() :
     ListAdapter<Person, MovieCreditAdapter.CreditViewHolder>(itemCallback) {

@@ -1,4 +1,4 @@
-package com.edsonlima.flixapp.presenter.movie.movedetails.tabs
+package com.edsonlima.flixapp.presenter.main.movie.details.tabs.comments
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -7,24 +7,23 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.edsonlima.flixapp.R
 import com.edsonlima.flixapp.databinding.FragmentCommentsBinding
-import com.edsonlima.flixapp.domain.model.AuthorDetails
-import com.edsonlima.flixapp.domain.model.MovieReview
-import com.edsonlima.flixapp.presenter.movie.MovieViewModel
-import com.edsonlima.flixapp.presenter.movie.movedetails.MovieCommentsAdapter
+import com.edsonlima.flixapp.presenter.main.movie.details.MovieDetailViewModel
+import com.edsonlima.flixapp.presenter.main.movie.genre.MovieGenreViewModel
 import com.edsonlima.flixapp.utils.StateView
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class CommentsFragment : Fragment() {
 
-    private lateinit var movieCommentsAdapter: MovieCommentsAdapter
+    private lateinit var commentsAdapter: CommentsAdapter
 
     private lateinit var binding: FragmentCommentsBinding
 
-    private val movieViewModel: MovieViewModel by activityViewModels()
+    private val movieDetailViewModel: MovieDetailViewModel by activityViewModels()
+    private val commentsViewModel: CommentsViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -44,25 +43,25 @@ class CommentsFragment : Fragment() {
     }
 
     private fun initRecycler() {
-        movieCommentsAdapter = MovieCommentsAdapter()
+        commentsAdapter = CommentsAdapter()
 
-        binding.rvMovieComments.adapter = movieCommentsAdapter
+        binding.rvMovieComments.adapter = commentsAdapter
 
         binding.rvMovieComments.layoutManager = LinearLayoutManager(requireContext())
     }
 
     private fun initObserver() {
-        movieViewModel.movieId.observe(viewLifecycleOwner) { movieId ->
+        movieDetailViewModel.movieId.observe(viewLifecycleOwner) { movieId ->
             getComments(movieId)
         }
     }
 
     private fun getComments(movieId: Int) {
-        movieViewModel.getCommentsByMovieId(movieId).observe(viewLifecycleOwner) { stateView ->
+        commentsViewModel.getCommentsByMovieId(movieId).observe(viewLifecycleOwner) { stateView ->
             when (stateView) {
                 is StateView.Loading -> {}
                 is StateView.Success -> {
-                    movieCommentsAdapter.submitList(stateView.data)
+                    commentsAdapter.submitList(stateView.data)
                 }
 
                 is StateView.Error -> {

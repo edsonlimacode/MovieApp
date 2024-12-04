@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".presenter.movie.movelist.MovieGenreFragment">
+    tools:context=".presenter.main.movie.genre.MovieGenreFragment">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appbar"

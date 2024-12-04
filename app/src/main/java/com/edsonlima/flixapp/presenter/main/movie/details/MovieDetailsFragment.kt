@@ -1,4 +1,4 @@
-package com.edsonlima.flixapp.presenter.movie.movedetails
+package com.edsonlima.flixapp.presenter.main.movie.details
 
 import android.os.Bundle
 import android.os.Handler
@@ -12,16 +12,15 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.viewpager2.widget.ViewPager2
 import com.bumptech.glide.Glide
 import com.edsonlima.flixapp.R
 import com.edsonlima.flixapp.databinding.DialogDownloadBinding
 import com.edsonlima.flixapp.databinding.FragmentMovieDetailsBinding
 import com.edsonlima.flixapp.domain.model.Movie
-import com.edsonlima.flixapp.presenter.movie.MovieViewModel
-import com.edsonlima.flixapp.presenter.movie.movedetails.tabs.CommentsFragment
-import com.edsonlima.flixapp.presenter.movie.movedetails.tabs.SimilarFragment
-import com.edsonlima.flixapp.presenter.movie.movedetails.tabs.TrailerFragment
+import com.edsonlima.flixapp.presenter.main.movie.genre.MovieGenreViewModel
+import com.edsonlima.flixapp.presenter.main.movie.details.tabs.comments.CommentsFragment
+import com.edsonlima.flixapp.presenter.main.movie.details.tabs.similar.SimilarFragment
+import com.edsonlima.flixapp.presenter.main.movie.details.tabs.trailer.TrailerFragment
 import com.edsonlima.flixapp.utils.StateView
 import com.edsonlima.flixapp.utils.calculateFileSize
 import com.edsonlima.flixapp.utils.initToolBar
@@ -39,7 +38,7 @@ class MovieDetailsFragment : Fragment() {
 
     private val args: MovieDetailsFragmentArgs by navArgs()
 
-    private val movieViewModel: MovieViewModel by activityViewModels()
+    private val movieDetailViewModel: MovieDetailViewModel by activityViewModels()
 
     private lateinit var movie: Movie
 
@@ -78,7 +77,7 @@ class MovieDetailsFragment : Fragment() {
 
     private fun initTabs() {
 
-        movieViewModel.getMovieId(args.movieId)
+        movieDetailViewModel.getMovieId(args.movieId)
 
         val viewPagerAdapter = ViewPagerAdapter(requireActivity())
 
@@ -92,14 +91,22 @@ class MovieDetailsFragment : Fragment() {
             TrailerFragment(),
             R.string.textTralier
         )
+
         viewPagerAdapter.addFragment(
             SimilarFragment(),
             R.string.textSimilar
         )
+
         viewPagerAdapter.addFragment(
             CommentsFragment(),
             R.string.textComentarios
         )
+
+      /*  binding.vpDetails.adapter = viewPagerAdapter
+
+        TabLayoutMediator(binding.tabDetails, binding.vpDetails) { tab, position ->
+            tab.text = getString(viewPagerAdapter.getTitle(position))
+        }.attach()*/
 
         viewPager2HeightAnimator.viewPager2?.let { viewPage2 ->
             TabLayoutMediator(binding.tabDetails, viewPage2) { tab, position ->
@@ -111,7 +118,7 @@ class MovieDetailsFragment : Fragment() {
 
     private fun getMovieById(movieId: Int) {
 
-        movieViewModel.getMovieById(movieId).observe(viewLifecycleOwner) { stateView ->
+        movieDetailViewModel.getMovieById(movieId).observe(viewLifecycleOwner) { stateView ->
 
             when (stateView) {
                 is StateView.Loading -> {}
@@ -152,7 +159,7 @@ class MovieDetailsFragment : Fragment() {
 
     private fun getCreditByMovieId(movieId: Int) {
 
-        movieViewModel.getCreditsByMovieId(movieId).observe(viewLifecycleOwner) { stateView ->
+        movieDetailViewModel.getCreditsByMovieId(movieId).observe(viewLifecycleOwner) { stateView ->
 
             when (stateView) {
                 is StateView.Loading -> {}
@@ -235,7 +242,7 @@ class MovieDetailsFragment : Fragment() {
     }
 
     private fun insertMovieToDatabase() {
-        movieViewModel.insertToDatabase(movie).observe(viewLifecycleOwner){}
+        movieDetailViewModel.insertToDatabase(movie).observe(viewLifecycleOwner){}
     }
 
     private fun getGenreName(movie: Movie): String? {

@@ -1,4 +1,4 @@
-package com.edsonlima.flixapp.presenter.movie.movedetails
+package com.edsonlima.flixapp.presenter.main.movie.details
 
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager

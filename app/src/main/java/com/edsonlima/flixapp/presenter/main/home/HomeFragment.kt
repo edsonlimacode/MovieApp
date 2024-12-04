@@ -65,6 +65,7 @@ class HomeFragment : Fragment() {
                 is StateView.Error -> {
                     binding.pbHome.isVisible = false
                     binding.rvHome.isVisible = true
+                    Toast.makeText(requireContext(), stateView.message, Toast.LENGTH_SHORT).show()
                 }
             }
         }
@@ -90,7 +91,6 @@ class HomeFragment : Fragment() {
         )
 
         binding.rvHome.adapter = genreMovieAdapter
-
     }
 
 }

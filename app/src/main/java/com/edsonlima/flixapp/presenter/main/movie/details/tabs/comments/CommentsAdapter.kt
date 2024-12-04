@@ -1,4 +1,4 @@
-package com.edsonlima.flixapp.presenter.movie.movedetails
+package com.edsonlima.flixapp.presenter.main.movie.details.tabs.comments
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -11,8 +11,8 @@ import com.edsonlima.flixapp.databinding.ItemMovieReviewBinding
 import com.edsonlima.flixapp.domain.model.MovieReview
 import com.edsonlima.flixapp.utils.formatCommentDate
 
-class MovieCommentsAdapter :
-    ListAdapter<MovieReview, MovieCommentsAdapter.MovieCommentsViewHolder>(itemCallback) {
+class CommentsAdapter :
+    ListAdapter<MovieReview, CommentsAdapter.MovieCommentsViewHolder>(itemCallback) {
 
     companion object {
         val itemCallback = object : DiffUtil.ItemCallback<MovieReview>() {

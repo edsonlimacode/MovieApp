@@ -5,8 +5,6 @@
     android:id="@+id/main_graph"
     app:startDestination="@id/menuHome">
 
-    <include app:graph="@navigation/nav_auth" />
-
     <fragment
         android:id="@+id/menuHome"
         android:name="com.edsonlima.flixapp.presenter.main.home.HomeFragment"
@@ -42,7 +40,7 @@
         tools:layout="@layout/fragment_search" />
     <fragment
         android:id="@+id/movieGenreFragment"
-        android:name="com.edsonlima.flixapp.presenter.movie.movelist.MovieGenreFragment"
+        android:name="com.edsonlima.flixapp.presenter.main.movie.genre.MovieGenreFragment"
         android:label="fragment_movie_genre"
         tools:layout="@layout/fragment_movie_genre" >
         <argument
@@ -54,7 +52,7 @@
     </fragment>
     <fragment
         android:id="@+id/movieDetailsFragment"
-        android:name="com.edsonlima.flixapp.presenter.movie.movedetails.MovieDetailsFragment"
+        android:name="com.edsonlima.flixapp.presenter.main.movie.details.MovieDetailsFragment"
         android:label="fragment_movie_details"
         tools:layout="@layout/fragment_movie_details" >
         <argument

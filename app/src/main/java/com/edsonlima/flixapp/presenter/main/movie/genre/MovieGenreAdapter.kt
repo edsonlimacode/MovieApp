@@ -1,4 +1,4 @@
-package com.edsonlima.flixapp.presenter.movie.movelist
+package com.edsonlima.flixapp.presenter.main.movie.genre
 
 import android.content.Context
 import android.view.LayoutInflater

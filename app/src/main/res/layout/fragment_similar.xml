@@ -7,7 +7,7 @@
     android:layout_height="wrap_content"
     android:paddingBottom="8dp"
     android:fillViewport="true"
-    tools:context=".presenter.movie.movedetails.tabs.SimilarFragment">
+    tools:context=".presenter.main.movie.details.tabs.similar.SimilarFragment">
 
 
     <androidx.recyclerview.widget.RecyclerView

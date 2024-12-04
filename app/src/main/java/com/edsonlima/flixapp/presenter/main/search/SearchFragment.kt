@@ -1,7 +1,6 @@
 package com.edsonlima.flixapp.presenter.main.search
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,15 +12,11 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.paging.LoadState
-import androidx.paging.map
 import androidx.recyclerview.widget.GridLayoutManager
 import com.edsonlima.flixapp.MainGraphDirections
 import com.edsonlima.flixapp.databinding.FragmentSearchBinding
-import com.edsonlima.flixapp.presenter.movie.MovieViewModel
-import com.edsonlima.flixapp.presenter.movie.movelist.LoadStatePagingAdapter
-import com.edsonlima.flixapp.presenter.movie.movelist.MovieGenreAdapter
-import com.edsonlima.flixapp.presenter.movie.movelist.MovieGenrePagingAdapter
-import com.edsonlima.flixapp.utils.StateView
+import com.edsonlima.flixapp.presenter.main.movie.genre.LoadStatePagingAdapter
+import com.edsonlima.flixapp.presenter.main.movie.genre.MovieGenrePagingAdapter
 import com.edsonlima.flixapp.utils.hideKeyboard
 import com.edsonlima.flixapp.utils.navigateAnimated
 import dagger.hilt.android.AndroidEntryPoint

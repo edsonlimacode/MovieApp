@@ -8,6 +8,7 @@ import android.os.Build
 import android.os.Bundle
 import android.os.Environment
 import android.provider.Settings
+import android.service.autofill.Sanitizer
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -52,6 +53,7 @@ class EditProfileFragment : Fragment() {
         ActivityResultContracts.GetContent()
     ) { uri: Uri? ->
         uri?.let {
+            currentPhotoUri = it
             binding.imgProfile.setImageURI(it)
         }
     }
@@ -59,6 +61,7 @@ class EditProfileFragment : Fragment() {
     private val pickMedia =
         registerForActivityResult(ActivityResultContracts.PickVisualMedia()) { uri ->
             uri?.let {
+                currentPhotoUri = it
                 binding.imgProfile.setImageURI(it)
             }
         }
@@ -128,64 +131,16 @@ class EditProfileFragment : Fragment() {
         }
 
         binding.btnUpdateProfile.setOnClickListener {
-            validate()
+            profileViewModel.validate(
+                binding.editNameProfile.text.toString(),
+                binding.editLastNameProfile.text.toString(),
+                binding.spGenre.selectedItem.toString(),
+                binding.spGenre.selectedItemPosition
+            )
         }
-    }
-
-    private fun validate() {
-
-        val name = binding.editNameProfile.text.toString()
-        val lastName = binding.editLastNameProfile.text.toString()
-        val genre = binding.spGenre.selectedItem.toString()
-
-        if (name.isEmpty()) {
-            Toast.makeText(requireContext(), "Nome é obrigatório", Toast.LENGTH_LONG).show()
-            return
-        }
-
-        if (lastName.isEmpty()) {
-            Toast.makeText(requireContext(), "Sobrenome é obrigatório", Toast.LENGTH_LONG).show()
-            return
-        }
-
-        if (genre.isEmpty() || binding.spGenre.selectedItemPosition == 0) {
-            Toast.makeText(requireContext(), "Gênero é obrigatório", Toast.LENGTH_LONG).show()
-            return
-        }
-
-        val user = User(
-            name = name,
-            genre = genre,
-            lastName = lastName
-        )
-
-        profileViewModel.update(user)
-
-
     }
 
     private fun initObservers() {
-        profileViewModel.loadingState.observe(viewLifecycleOwner) { sateView ->
-            when (sateView) {
-                is StateView.Loading -> {
-                    binding.loading.isVisible = true
-                }
-
-                is StateView.Success -> {
-                    binding.loading.isVisible = false
-                    Snackbar.make(
-                        binding.root,
-                        "Perfile atualizado com sucesso!",
-                        Snackbar.LENGTH_LONG
-                    ).show()
-                }
-
-                is StateView.Error -> {
-                    binding.loading.isVisible = false
-                    Toast.makeText(requireContext(), sateView.message, Toast.LENGTH_SHORT).show()
-                }
-            }
-        }
 
         profileViewModel.userState.observe(viewLifecycleOwner) { stateView ->
 
@@ -221,6 +176,28 @@ class EditProfileFragment : Fragment() {
                 }
             }
         }
+
+        profileViewModel.validate.observe(viewLifecycleOwner) { (validated, message) ->
+            if (validated) {
+
+                update()
+
+                Snackbar.make(binding.root, "Perfil atualizado com sucesso", Snackbar.LENGTH_LONG)
+                    .show()
+            } else {
+                Snackbar.make(binding.root, message.toString(), Snackbar.LENGTH_SHORT).show()
+            }
+        }
+    }
+
+    private fun update() {
+        val user = User(
+            name = binding.editNameProfile.text.toString(),
+            genre = binding.spGenre.selectedItem.toString(),
+            lastName = binding.editLastNameProfile.text.toString(),
+        )
+
+        profileViewModel.update(user)
     }
 
     private fun bottomSheetMediaProfile() {

@@ -30,10 +30,11 @@ class HomeViewModel @Inject constructor(
             _homeState.value = StateView.Loading()
 
             val genres = getGenresUseCase()
+
             getMoviesByGenreId(genres)
 
         } catch (ex: Exception) {
-            _homeState.postValue(StateView.Error(ex.message))
+            _homeState.value = StateView.Error(ex.message)
         }
 
     }

@@ -1,7 +1,6 @@
-package com.edsonlima.flixapp.presenter.movie.movelist
+package com.edsonlima.flixapp.presenter.main.movie.genre
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuInflater
@@ -22,8 +21,6 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.edsonlima.flixapp.MainGraphDirections
 import com.edsonlima.flixapp.R
 import com.edsonlima.flixapp.databinding.FragmentMovieGenreBinding
-import com.edsonlima.flixapp.presenter.movie.MovieViewModel
-import com.edsonlima.flixapp.utils.StateView
 import com.edsonlima.flixapp.utils.hideKeyboard
 import com.edsonlima.flixapp.utils.initToolBar
 import com.edsonlima.flixapp.utils.navigateAnimated
@@ -40,7 +37,7 @@ class MovieGenreFragment : Fragment() {
 
     private val args: MovieGenreFragmentArgs by navArgs()
 
-    private val movieViewModel: MovieViewModel by viewModels()
+    private val movieGenreViewModel: MovieGenreViewModel by viewModels()
 
     private lateinit var movieGenrePagingAdapter: MovieGenrePagingAdapter
 
@@ -68,10 +65,10 @@ class MovieGenreFragment : Fragment() {
 
     private fun getMoviesByGenre() {
 
-        movieViewModel.getMoviesByGenreId(args.genreId)
+        movieGenreViewModel.getMoviesByGenreId(args.genreId)
 
         lifecycleScope.launch {
-            movieViewModel.movieList.collect {
+            movieGenreViewModel.movieList.collect {
                 movieGenrePagingAdapter.submitData(it)
             }
         }
@@ -80,7 +77,7 @@ class MovieGenreFragment : Fragment() {
     private fun searchMovies(query: String) {
 
         lifecycleScope.launch {
-            movieViewModel.searchMoviesByName(query).collectLatest {
+            movieGenreViewModel.searchMoviesByName(query).collectLatest {
                 movieGenrePagingAdapter.submitData(it)
             }
         }

@@ -1,14 +1,12 @@
-package com.edsonlima.flixapp.presenter.movie.movelist
+package com.edsonlima.flixapp.presenter.main.movie.genre
 
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
-import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.bumptech.glide.Glide
-import com.edsonlima.flixapp.R
 import com.edsonlima.flixapp.databinding.ItemMovieGenreBinding
 import com.edsonlima.flixapp.domain.model.Movie
 import com.edsonlima.flixapp.utils.circularProgressDrawable

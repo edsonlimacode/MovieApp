@@ -1,7 +1,6 @@
-package com.edsonlima.flixapp.presenter.movie.movedetails.tabs
+package com.edsonlima.flixapp.presenter.main.movie.details.tabs.similar
 
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -12,10 +11,10 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.edsonlima.flixapp.MainGraphDirections
-import com.edsonlima.flixapp.R
 import com.edsonlima.flixapp.databinding.FragmentSimilarBinding
-import com.edsonlima.flixapp.presenter.movie.MovieViewModel
-import com.edsonlima.flixapp.presenter.movie.movelist.MovieGenreAdapter
+import com.edsonlima.flixapp.presenter.main.movie.details.MovieDetailViewModel
+import com.edsonlima.flixapp.presenter.main.movie.genre.MovieGenreViewModel
+import com.edsonlima.flixapp.presenter.main.movie.genre.MovieGenreAdapter
 import com.edsonlima.flixapp.utils.StateView
 import com.edsonlima.flixapp.utils.navigateAnimated
 import dagger.hilt.android.AndroidEntryPoint
@@ -23,7 +22,9 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class SimilarFragment : Fragment() {
 
-    private val movieViewModel: MovieViewModel by activityViewModels()
+    private val similarViewModel: SimilarViewModel by viewModels()
+
+    private val movieDetailViewModel: MovieDetailViewModel by activityViewModels()
 
     private lateinit var binding: FragmentSimilarBinding
 
@@ -46,13 +47,13 @@ class SimilarFragment : Fragment() {
     }
 
     private fun initObservers() {
-        movieViewModel.movieId.observe(viewLifecycleOwner) { movieId ->
+        movieDetailViewModel.movieId.observe(viewLifecycleOwner) { movieId ->
             getSimilar(movieId)
         }
     }
 
     private fun getSimilar(movieId: Int) {
-        movieViewModel.getSimilarByMovieId(movieId).observe(viewLifecycleOwner) { stateView ->
+        similarViewModel.getSimilarByMovieId(movieId).observe(viewLifecycleOwner) { stateView ->
             when (stateView) {
                 is StateView.Loading -> {}
                 is StateView.Success -> {

@@ -1,5 +1,6 @@
 package com.edsonlima.flixapp.presenter.main.profile
 
+import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -18,24 +19,21 @@ class ProfileViewModel @Inject constructor(
     private val getUserByIdUseCase: GetUserByIdUseCase
 ) : ViewModel() {
 
+    private val _validate = MutableLiveData<Pair<Boolean, String?>>()
+    val validate: LiveData<Pair<Boolean, String?>> = _validate
+
     private val _userState = MutableLiveData<StateView<User?>>()
     val userState: LiveData<StateView<User?>> = _userState
 
-    private val _profileState = MutableLiveData<StateView<Unit>>()
-    val loadingState: LiveData<StateView<Unit>> = _profileState
 
     fun update(user: User) = viewModelScope.launch {
-
-        _profileState.value = StateView.Loading()
 
         try {
 
             updateProfileUseCase(user)
 
-            _profileState.value = StateView.Success(Unit)
-
         } catch (ex: Exception) {
-            _profileState.value = StateView.Error(ex.message)
+            _userState.value = StateView.Error(ex.message)
         }
 
     }
@@ -53,6 +51,30 @@ class ProfileViewModel @Inject constructor(
             _userState.value = StateView.Error(ex.message)
         }
 
+    }
+
+    fun validate(
+        name: String,
+        lastName: String,
+        genre: String,
+        selectedItemPosition: Int
+    ) {
+        if (name.isEmpty()) {
+            _validate.value = Pair(false, "Nome é obrigatório")
+            return
+        }
+
+        if (lastName.isEmpty()) {
+            _validate.value = Pair(false, "Sobrenome é obrigatório")
+            return
+        }
+
+        if (genre.isEmpty() || selectedItemPosition == 0) {
+            _validate.value = Pair(false, "Gênero é obrigatório")
+            return
+        }
+
+        _validate.value = Pair(true, null)
     }
 
 }

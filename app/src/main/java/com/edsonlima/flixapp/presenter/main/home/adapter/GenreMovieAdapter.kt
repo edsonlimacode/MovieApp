@@ -34,22 +34,23 @@ class GenreMovieAdapter(
         private val binding: ItemGenreMovieBinding
     ) : ViewHolder(binding.root) {
 
-        fun bind(genre: MovieByGenre) {
+        fun bind(movieByGenre: MovieByGenre) {
 
-            binding.textCategoryTitle.text = genre.name.toString()
+            binding.textCategoryTitle.text = movieByGenre.name.toString()
 
             val movieAdapter = MovieAdapter(
                 context = binding.root.context,
-                onClickListener = onClickListener
+                onClickListener = { movieId ->
+                    onClickListener(movieId)
+                }
             )
 
             binding.rvGenre.adapter = movieAdapter
 
-            movieAdapter.submitList(genre.movies)
-
+            movieAdapter.submitList(movieByGenre.movies)
 
             binding.btnSeeAll.setOnClickListener {
-                onClick(genre.id!!, genre.name!!)
+                onClick(movieByGenre.id!!, movieByGenre.name!!)
             }
         }
     }
