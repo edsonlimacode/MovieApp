@@ -5,6 +5,8 @@ import com.edsonlima.flixapp.data.model.CreditResponse
 import com.edsonlima.flixapp.data.model.GenresResponse
 import com.edsonlima.flixapp.data.model.MovieResponse
 import com.edsonlima.flixapp.data.model.MovieReviewResponse
+import com.edsonlima.flixapp.data.model.TrailerByMovieResponse
+import com.edsonlima.flixapp.data.model.TrailerResponse
 
 interface IMovieRepository {
 
@@ -37,4 +39,8 @@ interface IMovieRepository {
     suspend fun getCommentsByMovieId(
         movieId: Int
     ): List<MovieReviewResponse>
+
+    suspend fun getTrailersByMovieId(
+        movieId: Int
+    ): List<TrailerResponse>
 }

@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -14,8 +15,11 @@ import com.edsonlima.flixapp.databinding.BottomSheetLogoutBinding
 import com.edsonlima.flixapp.databinding.FragmentProfileBinding
 import com.edsonlima.flixapp.domain.model.ItemMenuProfile
 import com.edsonlima.flixapp.domain.model.Type
+import com.edsonlima.flixapp.domain.model.User
 import com.edsonlima.flixapp.presenter.auth.AuthActivity
 import com.edsonlima.flixapp.presenter.auth.logout.LogoutViewModel
+import com.edsonlima.flixapp.utils.FirebaseHelper
+import com.edsonlima.flixapp.utils.StateView
 import com.edsonlima.flixapp.utils.navigateToNavGraph
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.bottomsheet.BottomSheetDialog
@@ -44,6 +48,34 @@ class ProfileFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         initRecycler()
+        getUserById()
+        initObservers()
+    }
+
+    private fun getUserById() {
+        logoutViewModel.getUserById(FirebaseHelper.getUserId())
+    }
+
+    private fun setData(user: User) {
+        binding.textProfileName.text = user.name
+        binding.textProfileEmail.text = FirebaseHelper.getAuth().currentUser?.email
+    }
+
+    private fun initObservers() {
+        logoutViewModel.userState.observe(viewLifecycleOwner) { stateView ->
+            when (stateView) {
+                is StateView.Loading -> {}
+                is StateView.Success -> {
+                    stateView.data?.let {
+                        setData(stateView.data)
+                    }
+                }
+
+                is StateView.Error -> {
+                    Toast.makeText(requireContext(), stateView.message, Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
     }
 
     private fun initRecycler() {

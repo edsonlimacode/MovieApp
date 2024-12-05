@@ -27,4 +27,18 @@
         <item name="android:textColor">@color/dark_300</item>
         <item name="iconsTint">@color/dark_400</item>
     </style>
+
+    <!--CAMPO EMAIL PERFIL-->
+    <style name="EmailDisabledField" parent="Base.Theme.FlixApp">
+        <item name="backgroundTint">#121212</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:fontFamily">@font/urbanist_700</item>
+    </style>
+
+    <style name="PopUpSelectGenreProfile" parent="Base.Theme.FlixApp">
+        <item name="android:popupBackground">@color/dark_900</item>
+        <item name="android:fontFamily">@font/urbanist_700</item>
+        <item name="android:textColor">@color/dark_300</item>
+        <item name="android:textSize">18sp</item>
+    </style>
 </resources>

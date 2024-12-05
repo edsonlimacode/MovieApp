@@ -48,7 +48,6 @@ class MainActivity : AppCompatActivity() {
         navController.addOnDestinationChangedListener { controller, destination, arguments ->
             binding.bnvMain.isVisible = destination.id == R.id.menuHome ||
                     destination.id == R.id.menuSearch ||
-                    destination.id == R.id.menuFavorite ||
                     destination.id == R.id.menuDownload ||
                     destination.id == R.id.menuProfile
         }

@@ -60,8 +60,19 @@
         <item name="android:windowMinWidthMinor">80%</item>
     </style>
 
-    <style name="TextColorTheme" parent="Theme.Material3.DayNight.NoActionBar">
-        <item name="android:textColorPrimary">@color/dark_900</item>
+    <!--CAMPO EMAIL PERFIL-->
+    <style name="EmailDisabledField" parent="Base.Theme.FlixApp">
+        <item name="backgroundTint">@color/dark_300</item>
+        <item name="android:fontFamily">@font/urbanist_700</item>
+        <item name="android:textColorHint">@color/dark_400</item>
+        <item name="android:textSize">18sp</item>
+    </style>
+
+    <style name="PopUpSelectGenreProfile" parent="Base.Theme.FlixApp">
+        <item name="android:popupBackground">@color/dark_300</item>
+        <item name="android:fontFamily">@font/urbanist_700</item>
+        <item name="android:textColor">@color/dark_900</item>
+        <item name="android:textSize">16sp</item>
     </style>
 
 </resources>

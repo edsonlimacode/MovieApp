@@ -20,11 +20,6 @@
         android:label="fragment_download"
         tools:layout="@layout/fragment_download" />
     <fragment
-        android:id="@+id/menuFavorite"
-        android:name="com.edsonlima.flixapp.presenter.main.favorite.FavoriteFragment"
-        android:label="fragment_favorite"
-        tools:layout="@layout/fragment_favorite" />
-    <fragment
         android:id="@+id/menuProfile"
         android:name="com.edsonlima.flixapp.presenter.main.profile.ProfileFragment"
         android:label="fragment_profile"

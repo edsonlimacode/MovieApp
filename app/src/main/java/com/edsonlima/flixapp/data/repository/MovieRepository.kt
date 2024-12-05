@@ -6,6 +6,8 @@ import com.edsonlima.flixapp.data.model.CreditResponse
 import com.edsonlima.flixapp.data.model.GenresResponse
 import com.edsonlima.flixapp.data.model.MovieResponse
 import com.edsonlima.flixapp.data.model.MovieReviewResponse
+import com.edsonlima.flixapp.data.model.TrailerByMovieResponse
+import com.edsonlima.flixapp.data.model.TrailerResponse
 import com.edsonlima.flixapp.data.paging.MoviePagingSource
 import com.edsonlima.flixapp.data.paging.MovieSearchPagingSource
 import com.edsonlima.flixapp.domain.repository.IMovieRepository
@@ -56,5 +58,9 @@ class MovieRepository @Inject constructor(
         movieId: Int
     ): List<MovieReviewResponse> {
         return service.getCommentsByMovieId(movieId).results ?: emptyList()
+    }
+
+    override suspend fun getTrailersByMovieId(movieId: Int): List<TrailerResponse> {
+        return service.getTrailersByMovieId(movieId).results ?: emptyList()
     }
 }

@@ -5,6 +5,8 @@ import com.edsonlima.flixapp.data.model.CreditResponse
 import com.edsonlima.flixapp.data.model.GenresResponse
 import com.edsonlima.flixapp.data.model.MovieResponse
 import com.edsonlima.flixapp.data.model.MovieReviewResponse
+import com.edsonlima.flixapp.data.model.TrailerByMovieResponse
+import com.edsonlima.flixapp.data.model.TrailerResponse
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
@@ -39,12 +41,17 @@ interface ServiceApi {
     @GET("movie/{movie_id}/credits")
     suspend fun getCreditsByMovieId(
         @Path("movie_id") movieId: Int,
-   ): CreditResponse
+    ): CreditResponse
 
     @GET("movie/{movie_id}/similar")
     suspend fun getSimilarByMovieId(
         @Path("movie_id") movieId: Int,
-   ): BasePaginationResponse<List<MovieResponse>>
+    ): BasePaginationResponse<List<MovieResponse>>
+
+    @GET("movie/{movie_id}/videos")
+    suspend fun getTrailersByMovieId(
+        @Path("movie_id") movieId: Int,
+    ): TrailerByMovieResponse
 
     @GET("movie/{movie_id}/reviews")
     suspend fun getCommentsByMovieId(

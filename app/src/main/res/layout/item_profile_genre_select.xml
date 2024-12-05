@@ -5,6 +5,4 @@
     android:background="?android:attr/selectableItemBackground"
     android:gravity="center_vertical"
     android:padding="8dp"
-    android:fontFamily="@font/urbanist_700"
-    android:textColor="#a6a5a7"
-    android:textSize="16sp" />
+    style="@style/PopUpSelectGenreProfile" />
