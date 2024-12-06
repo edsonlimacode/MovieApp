@@ -5,7 +5,6 @@ import com.edsonlima.flixapp.data.model.CreditResponse
 import com.edsonlima.flixapp.data.model.GenresResponse
 import com.edsonlima.flixapp.data.model.MovieResponse
 import com.edsonlima.flixapp.data.model.MovieReviewResponse
-import com.edsonlima.flixapp.data.model.TrailerByMovieResponse
 import com.edsonlima.flixapp.data.model.TrailerResponse
 
 interface IMovieRepository {

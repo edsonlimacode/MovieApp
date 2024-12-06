@@ -6,7 +6,6 @@ import com.edsonlima.flixapp.data.model.GenresResponse
 import com.edsonlima.flixapp.data.model.MovieResponse
 import com.edsonlima.flixapp.data.model.MovieReviewResponse
 import com.edsonlima.flixapp.data.model.TrailerByMovieResponse
-import com.edsonlima.flixapp.data.model.TrailerResponse
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
@@ -57,5 +56,4 @@ interface ServiceApi {
     suspend fun getCommentsByMovieId(
         @Path("movie_id") movieId: Int,
     ): BasePaginationResponse<List<MovieReviewResponse>>
-
 }

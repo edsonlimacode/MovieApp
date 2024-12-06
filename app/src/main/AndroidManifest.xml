@@ -31,7 +31,6 @@
         <activity
             android:name=".presenter.auth.AuthActivity"
             android:exported="true"
-            android:theme="@style/Theme.FlixApp"
             tools:ignore="DiscouragedApi">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

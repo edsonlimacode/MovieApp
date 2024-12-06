@@ -7,6 +7,7 @@
         <item name="android:windowBackground">@color/dark_950</item>
         <item name="android:textColor">@color/dark_300</item>
 
+
     </style>
 
     <!--Toolbar-->
