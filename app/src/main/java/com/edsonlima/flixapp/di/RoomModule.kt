@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.room.Room
 import com.edsonlima.flixapp.data.local.dao.MovieDao
 import com.edsonlima.flixapp.data.local.db.AppDatabase
+import com.edsonlima.flixapp.data.local.db.AppDatabase.Companion.MIGRATION_1_2
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -23,7 +24,8 @@ class RoomModule {
         context,
         AppDatabase::class.java,
         "movie_database"
-    ).build()
+    ).addMigrations(MIGRATION_1_2)
+        .build()
 
     @Singleton
     @Provides

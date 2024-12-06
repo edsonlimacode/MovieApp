@@ -3,6 +3,8 @@ package com.edsonlima.flixapp.data.local.repository
 import com.edsonlima.flixapp.data.local.dao.MovieDao
 import com.edsonlima.flixapp.data.local.entity.MovieEntity
 import com.edsonlima.flixapp.domain.local.repository.IMovieLocalRepository
+import com.edsonlima.flixapp.domain.model.User
+import com.edsonlima.flixapp.utils.FirebaseHelper
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
@@ -14,7 +16,7 @@ class MovieLocalRepository @Inject constructor(
     }
 
     override fun getAllMovies(): Flow<List<MovieEntity>> {
-        return movieDao.getAllMovies()
+        return movieDao.getAllMovies(FirebaseHelper.getUserId())
     }
 
     override suspend fun update(movieEntity: MovieEntity) {
