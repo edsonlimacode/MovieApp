@@ -19,6 +19,7 @@ import com.edsonlima.flixapp.presenter.main.movie.genre.LoadStatePagingAdapter
 import com.edsonlima.flixapp.presenter.main.movie.genre.MovieGenrePagingAdapter
 import com.edsonlima.flixapp.utils.hideKeyboard
 import com.edsonlima.flixapp.utils.navigateAnimated
+import com.edsonlima.flixapp.utils.onApplyWindowInsets
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -44,6 +45,8 @@ class SearchFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        onApplyWindowInsets(view = view, applyBottom = false)
 
         initRecycler()
         initSearchBar()

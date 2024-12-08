@@ -25,6 +25,7 @@ import com.edsonlima.flixapp.utils.calculateMovieTime
 import com.edsonlima.flixapp.utils.hideKeyboard
 import com.edsonlima.flixapp.utils.initToolBar
 import com.edsonlima.flixapp.utils.navigateAnimated
+import com.edsonlima.flixapp.utils.onApplyWindowInsets
 import com.ferfalk.simplesearchview.SimpleSearchView
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import dagger.hilt.android.AndroidEntryPoint
@@ -50,6 +51,8 @@ class DownloadFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        onApplyWindowInsets(view = view, applyBottom = false)
 
         initToolBar(binding.tbMovieDownload, false)
         initRecycler()
@@ -103,7 +106,7 @@ class DownloadFragment : Fragment() {
             }
 
             override fun onSearchViewClosed() {
-               downloadViewModel.getMovies()
+                downloadViewModel.getMovies()
             }
 
             override fun onSearchViewShownAnimation() {}

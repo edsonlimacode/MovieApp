@@ -15,6 +15,8 @@ import com.edsonlima.flixapp.databinding.FragmentHomeBinding
 import com.edsonlima.flixapp.presenter.main.home.adapter.GenreMovieAdapter
 import com.edsonlima.flixapp.utils.StateView
 import com.edsonlima.flixapp.utils.navigateAnimated
+import com.edsonlima.flixapp.utils.onApplyComponentWindowInsets
+import com.edsonlima.flixapp.utils.onApplyWindowInsets
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -45,6 +47,8 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        onApplyWindowInsets(view = view, applyBottom = false)
 
         initRecyclerView()
 

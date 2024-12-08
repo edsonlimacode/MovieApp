@@ -1,10 +1,12 @@
 package com.edsonlima.flixapp.presenter.main.movie.details.tabs.trailer
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
@@ -25,6 +27,7 @@ class TrailerFragment : Fragment() {
 
     private lateinit var trailerAdapter: TrailerAdapter
 
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -34,6 +37,7 @@ class TrailerFragment : Fragment() {
 
         return binding.root
     }
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -49,14 +53,19 @@ class TrailerFragment : Fragment() {
 
         trailerViewModel.trailers.observe(viewLifecycleOwner) { stateView ->
             when (stateView) {
-                is StateView.Loading -> {}
+                is StateView.Loading -> {
+                    binding.pbTrailers.isVisible = true
+                }
+
                 is StateView.Success -> {
+                    binding.pbTrailers.isVisible = false
                     stateView.data?.let { trailers ->
                         trailerAdapter.submitList(trailers)
                     }
                 }
 
                 is StateView.Error -> {
+                    binding.pbTrailers.isVisible = false
                     Toast.makeText(requireContext(), stateView.message, Toast.LENGTH_SHORT).show()
                 }
             }

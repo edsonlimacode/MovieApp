@@ -24,6 +24,7 @@ import com.edsonlima.flixapp.databinding.FragmentMovieGenreBinding
 import com.edsonlima.flixapp.utils.hideKeyboard
 import com.edsonlima.flixapp.utils.initToolBar
 import com.edsonlima.flixapp.utils.navigateAnimated
+import com.edsonlima.flixapp.utils.onApplyWindowInsets
 import com.ferfalk.simplesearchview.SimpleSearchView
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
@@ -55,6 +56,9 @@ class MovieGenreFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         initToolBar(binding.tbMovieGenre)
+
+        onApplyWindowInsets(view = view, applyBottom = false)
+
         binding.tbMovieGenre.title = args.name
 
         initRecycler()

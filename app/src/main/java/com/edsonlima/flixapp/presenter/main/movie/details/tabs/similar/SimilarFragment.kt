@@ -17,6 +17,7 @@ import com.edsonlima.flixapp.presenter.main.movie.genre.MovieGenreViewModel
 import com.edsonlima.flixapp.presenter.main.movie.genre.MovieGenreAdapter
 import com.edsonlima.flixapp.utils.StateView
 import com.edsonlima.flixapp.utils.navigateAnimated
+import com.edsonlima.flixapp.utils.onApplyComponentWindowInsets
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -42,6 +43,9 @@ class SimilarFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        onApplyComponentWindowInsets(view = binding.rvMovieSimilar)
+
         initRecycler()
         initObservers()
     }

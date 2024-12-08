@@ -10,8 +10,10 @@ import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.viewpager2.widget.ViewPager2
 import com.bumptech.glide.Glide
 import com.edsonlima.flixapp.R
 import com.edsonlima.flixapp.databinding.DialogDownloadBinding
@@ -19,10 +21,13 @@ import com.edsonlima.flixapp.databinding.FragmentMovieDetailsBinding
 import com.edsonlima.flixapp.domain.model.Movie
 import com.edsonlima.flixapp.presenter.main.movie.details.tabs.comments.CommentsFragment
 import com.edsonlima.flixapp.presenter.main.movie.details.tabs.similar.SimilarFragment
+import com.edsonlima.flixapp.presenter.main.movie.details.tabs.trailer.TrailerAdapter
 import com.edsonlima.flixapp.presenter.main.movie.details.tabs.trailer.TrailerFragment
+import com.edsonlima.flixapp.presenter.main.movie.details.tabs.trailer.TrailerViewModel
 import com.edsonlima.flixapp.utils.StateView
 import com.edsonlima.flixapp.utils.calculateFileSize
 import com.edsonlima.flixapp.utils.initToolBar
+import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
 import org.threeten.bp.LocalDate
@@ -85,7 +90,6 @@ class MovieDetailsFragment : Fragment() {
         viewPager2HeightAnimator.viewPager2 = binding.vpDetails
 
         viewPager2HeightAnimator.viewPager2?.adapter = viewPagerAdapter
-
         viewPagerAdapter.addFragment(
             TrailerFragment(),
             R.string.textTralier
@@ -101,11 +105,15 @@ class MovieDetailsFragment : Fragment() {
             R.string.textComentarios
         )
 
-      /*  binding.vpDetails.adapter = viewPagerAdapter
+       /* binding.vpDetails.adapter = viewPagerAdapter
 
-        TabLayoutMediator(binding.tabDetails, binding.vpDetails) { tab, position ->
+        TabLayoutMediator(binding.tabDetails,  binding.vpDetails) { tab, position ->
             tab.text = getString(viewPagerAdapter.getTitle(position))
-        }.attach()*/
+        }.attach()
+*/
+        binding.vpDetails.offscreenPageLimit = viewPagerAdapter.itemCount
+
+
 
         viewPager2HeightAnimator.viewPager2?.let { viewPage2 ->
             TabLayoutMediator(binding.tabDetails, viewPage2) { tab, position ->

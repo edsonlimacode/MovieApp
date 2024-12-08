@@ -27,4 +27,5 @@ class ViewPagerAdapter(fragmentActivity: FragmentActivity) :
     override fun getItemCount(): Int {
         return fragmentList.size
     }
+
 }
