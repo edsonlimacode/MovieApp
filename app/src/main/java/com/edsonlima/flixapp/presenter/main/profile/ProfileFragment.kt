@@ -51,7 +51,7 @@ class ProfileFragment : Fragment() {
         getUserById()
         initObservers()
 
-        binding.textProfileEmail.text = FirebaseHelper.getAuth().currentUser?.email
+        //binding.textProfileEmail.text = FirebaseHelper.getAuth().currentUser?.email
     }
 
     private fun getUserById() {
@@ -59,7 +59,7 @@ class ProfileFragment : Fragment() {
     }
 
     private fun setData(user: User) {
-        binding.textProfileName.text = user.name
+       // binding.textProfileName.text = user.name
     }
 
     private fun initObservers() {
