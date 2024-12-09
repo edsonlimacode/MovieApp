@@ -56,7 +56,10 @@ class CommentsAdapter :
             binding.textPersonName.text = movieReview.author
             binding.textDescriptionReview.text = movieReview.content
             binding.textRatingNumber.text = (movieReview.authorDetails?.rating ?: 0).toString()
-            binding.textRatingDate.text = formatCommentDate(movieReview.createdAt)
+
+            movieReview?.createdAt?.let {
+                binding.textRatingDate.text = formatCommentDate(movieReview.createdAt)
+            }
 
         }
     }

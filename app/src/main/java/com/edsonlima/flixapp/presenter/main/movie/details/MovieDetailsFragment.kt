@@ -105,15 +105,7 @@ class MovieDetailsFragment : Fragment() {
             R.string.textComentarios
         )
 
-       /* binding.vpDetails.adapter = viewPagerAdapter
-
-        TabLayoutMediator(binding.tabDetails,  binding.vpDetails) { tab, position ->
-            tab.text = getString(viewPagerAdapter.getTitle(position))
-        }.attach()
-*/
         binding.vpDetails.offscreenPageLimit = viewPagerAdapter.itemCount
-
-
 
         viewPager2HeightAnimator.viewPager2?.let { viewPage2 ->
             TabLayoutMediator(binding.tabDetails, viewPage2) { tab, position ->

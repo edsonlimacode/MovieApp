@@ -84,6 +84,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/urbanist_500"
-            android:text="3 dias atrás" />
+            tools:text="3 dias atrás" />
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
