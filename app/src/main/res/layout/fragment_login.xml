@@ -112,18 +112,20 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/btnLogin" />
 
-        <ImageView
+        <ProgressBar
             android:id="@+id/loading"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_marginTop="16dp"
-            android:src="@drawable/loading"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:visibility="invisible"
+            android:layout_marginTop="16dp"
+            android:indeterminateTint="@color/color_default"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.498"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/btnForgotPassword"
-            tools:visibility="visible" />
+            tools:visibility="visible">
+
+        </ProgressBar>
 
         <LinearLayout
             android:id="@+id/lnMedia"

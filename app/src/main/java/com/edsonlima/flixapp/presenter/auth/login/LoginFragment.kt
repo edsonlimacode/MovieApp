@@ -42,9 +42,9 @@ class LoginFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        Glide.with(this).load(
+        /*Glide.with(this).load(
             R.drawable.loading
-        ).into(binding.loading);
+        ).into(binding.loading);*/
 
         initToolBar(binding.tbLogin)
 
